@@ -22,10 +22,10 @@ module.exports = {
         allowNull: false,
       },
       username: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
@@ -41,7 +41,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    });
+    },
+    options
+  );
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Users";
