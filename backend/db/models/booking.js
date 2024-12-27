@@ -11,11 +11,64 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Booking.belongsTo(models.Spot, {
+        foreignKey: "spotId",
+      });
+      Booking.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
+
+    
   }
   Booking.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING
+    
+      spotId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Spots",
+        },
+        onDelete: "CASCADE",
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Users",
+        },
+        onDelete: "CASCADE",
+      },
+      startDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          isDate: true,
+        },
+      },
+      endDate: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        validate: {
+          isDate: true,
+        },
+      },
+    },
+    {
+      sequelize,
+      modelName: "Booking",
+      defaultScope: {
+        attributes: {
+          exclude: ["updatedAt", "createdAt"],
+        },
+      },
+      scopes: {
+        booker: {
+          attributes: ["spotId", "startDate", "endDate"],
+        },
+      },
+    
   }, {
     sequelize,
     modelName: 'Booking',

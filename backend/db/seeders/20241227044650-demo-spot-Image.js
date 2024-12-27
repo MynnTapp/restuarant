@@ -23,22 +23,22 @@ module.exports = {
       [
         {
           spotId: 1,
-          url: "https://c8.alamy.com/comp/2E3DN2H/cartoon-fairy-tale-pink-castle-magic-fairytale-medieval-tower-princess-castle-in-pink-clouds-vector-fabulous-illustration-majestic-pink-castle-2E3DN2H.jpg",
+          url: "https://www.rachelcooks.com/wp-content/uploads/2022/02/bbq-chicken-pizza-2022-1500r-12-square.jpg",
           preview: true,
         },
         {
           spotId: 2,
-          url: "https://www.creativefabrica.com/wp-content/uploads/2023/03/03/Fairy-House-Kawaii-Magic-Castle-63104854-1.png",
+          url: "https://api.pizzahut.io/v1/content/en-in/in-1/images/pizza/veggie-supreme-cheese-maxx.9c36faf3796239a077a0a98ba489d7ce.1.jpg",
           preview: false,
         },
         {
           spotId: 3,
-          url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/f03f3ac4-ad08-471b-b6b5-f7a77aafe26b/dfxz8nm-6f0ef65c-8c93-443b-8940-04b99fd98f9f.png/v1/fill/w_1920,h_1077,q_80,strp/castle_in_the_sky_by_misconceptionaiart_dfxz8nm-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2YwM2YzYWM0LWFkMDgtNDcxYi1iNmI1LWY3YTc3YWFmZTI2YlwvZGZ4ejhubS02ZjBlZjY1Yy04YzkzLTQ0M2ItODk0MC0wNGI5OWZkOThmOWYucG5nIiwiaGVpZ2h0IjoiPD0xMDc3Iiwid2lkdGgiOiI8PTE5MjAifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6aW1hZ2Uud2F0ZXJtYXJrIl0sIndtayI6eyJwYXRoIjoiXC93bVwvZjAzZjNhYzQtYWQwOC00NzFiLWI2YjUtZjdhNzdhYWZlMjZiXC9taXNjb25jZXB0aW9uYWlhcnQtNC5wbmciLCJvcGFjaXR5Ijo5NSwicHJvcG9ydGlvbnMiOjAuNDUsImdyYXZpdHkiOiJjZW50ZXIifX0.hDIL_78gjm8O5VBeXhnQDHrqoJyel2DAeTzdnOh08-E",
+          url: "https://www.recipetineats.com/tachyon/2023/05/Garlic-cheese-pizza_9.jpg",
           preview: false,
         },
         {
           spotId: 4,
-          url: "https://images.squarespace-cdn.com/content/v1/5062cb04e4b0593d8666f005/1487186415398-36IYCFWI232RV5MV0ROJ/Inside_and_Seek_%2820%29.png",
+          url: "https://cdn.usarestaurants.info/assets/uploads/0e2035aecd9cc17a099fc60f52292ca3_-united-states-michigan-macomb-county-warren-sorrento-pizza-586-759-1177htm.jpg",
           preview: false,
         },
         {

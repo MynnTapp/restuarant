@@ -17,9 +17,7 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        spotId: {
-          type: Sequelize.INTEGER,
-        },
+        
         ownerId: {
           type: Sequelize.INTEGER,
         },
