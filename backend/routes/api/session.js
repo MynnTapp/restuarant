@@ -15,40 +15,6 @@ const validateLogin = [
   handleValidationErrors,
 ];
 
-// Restore session user
-// router.get("/", restoreUser, (req, res) => {
-//   const User = req.user.dataValues;
-
-//   if (User) {
-//     const safeUser = {
-//       id: User.id,
-//       firstName: User.firstName,
-//       lastName: User.lastName,
-//       email: User.email,
-//       username: User.username,
-//     };
-//     return res.status.json({
-//       user: safeUser,
-//     });
-//   } else return res.status(200).json({ user: null });
-// });
-
-// router.get("/", restoreUser, (req, res) => {
-//   if (!req.user) {
-//     return res.status(200).json({ user: null });
-//   }
-//   const User = req.user.dataValues;
-//   const safeUser = {
-//     id: User.id,
-//     firstName: User.firstName,
-//     lastName: User.lastName,
-//     email: User.email,
-//     username: User.username,
-//   };
-//   return res.status(200).json({
-//     user: safeUser,
-//   });
-// });
 
 router.get("/", restoreUser, async (req, res) => {
   if (!req.user) {
@@ -105,50 +71,6 @@ router.get("/", restoreUser, async (req, res) => {
   });
 });
 
-// Log in
-// Log in
-// router.post("/", validateLogin, async (req, res, next) => {
-//   try {
-//     const { credential, password } = req.body;
-
-//     const user = await User.unscoped().findOne({
-//       where: {
-//         [Op.or]: {
-//           username: credential,
-//           email: credential,
-//         },
-//       },
-//     });
-
-//     if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-//       const err = new Error("Invalid credentials");
-//       err.status = 401;
-//       err.title = "Login failed";
-//       err.errors = { credential: "Invalid credentials" };
-//       return next(err);
-//     }
-
-//     const safeUser = {
-//       id: user.id,
-//       firstName: user.firstName,
-//       lastName: user.lastName,
-//       email: user.email,
-//       username: user.username,
-//     };
-
-//     await setTokenCookie(res, safeUser);
-
-//     return res.json({
-//       user: safeUser,
-//     });
-//   } catch (error) {
-//     console.error(error); // Log the error for debugging
-//     res.status(500).json({
-//       message: "Error logging in",
-//       error: error.message, // Return the error message
-//     });
-//   }
-// });
 
 router.post("/", validateLogin, async (req, res, next) => {
   try {
