@@ -60,47 +60,39 @@ const setTokenCookie = (res, user) => {
 //   });
 // };
 
-const restoreUser = (req, res, next) => {
-  // Parse token from cookies
+const restoreUser = async (req, res, next) => {
   const { token } = req.cookies;
-
-  req.user = User;
 
   if (!token) {
     console.log("No token found in cookies");
-    return next(); // If no token, continue without restoring user
+    req.user = null; // Explicitly set req.user to null
+    return next(); // Proceed without restoring user
   }
 
-  return jwt.verify(token, secret, null, async (err, jwtPayload) => {
-    if (err) {
-      console.log("JWT verification error:", err); // Log error if token verification fails
-      res.clearCookie("token");
-      return next();
+  try {
+    const jwtPayload = jwt.verify(token, secret); // Verify token with secret
+    const { id } = jwtPayload.data;
+
+    const user = await User.findByPk(id, {
+      attributes: ["id", "username", "email", "firstName", "lastName", "createdAt", "updatedAt"],
+    });
+
+    if (user) {
+      req.user = user; // Attach user object to req
+      console.log(`User restored: ${user.username}`);
+    } else {
+      req.user = null; // User not found, ensure req.user is null
+      res.clearCookie("token"); // Clear the invalid token
+      console.log("User not found in database");
     }
+  } catch (err) {
+    console.log("Error during token verification or user lookup:", err);
+    req.user = null; // On any error, set req.user to null
+    res.clearCookie("token"); // Clear the invalid token
+  }
 
-    try {
-      const { id } = jwtPayload.data;
-      req.user = await User.findByPk(id, {
-        attributes: {
-          include: ["email", "createdAt", "updatedAt"],
-        },
-      });
-
-      if (!req.user) {
-        console.log("User not found in database");
-        res.clearCookie("token"); // Clear token if user not found
-      } else {
-        console.log(`User restored: ${req.user.username}`);
-      }
-    } catch (e) {
-      console.log("Error finding user by ID:", e);
-      res.clearCookie("token"); // Clear token if error occurs during user lookup
-    }
-
-    return next(); // Proceed to next middleware or route handler
-  });
+  return next(); // Proceed to next middleware or route handler
 };
-
 const refreshToken = async (req, res, next) => {
   // If the user is authenticated, issue a new token and reset the cookie
   if (req.user) {
