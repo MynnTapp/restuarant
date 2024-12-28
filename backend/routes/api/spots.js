@@ -473,8 +473,13 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, validateBooking, asyn
   const { spotId } = req.params; // Retrieve unique identifier of spot user wants to book
 
   // Retrieve requested booking dates and convert to timestamps
-  const startTimestamp = new Date(req.body.startDate).getTime();
-  const endTimestamp = new Date(req.body.endDate).getTime();
+  const startTimestamp = new Date(req.body.startDate)
+  const endTimestamp = new Date(req.body.endDate)
+
+
+
+
+
 
   // Retrieve full record of spot user wants to book
   const spot = await Spot.findByPk(spotId);
@@ -682,13 +687,13 @@ router.get("/:spotId/reviews", async (req, res) => {
 
   return res.status(200).json({ Reviews: spotReviews });
 });
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
 /**** GET bookings by spot's id ****/
 router.get("/:spotId/bookings", restoreUser, async (req, res) => {
   const { spotId } = req.params;
   const currentUserId = req.user.id;
 
-  const spot = await spot.findByPk(spotId); // get spot id
+  const spot = await Spot.findByPk(spotId); // get spot id
 
   if (!spot) {
     return res.status(404).json({
@@ -734,5 +739,5 @@ router.get("/:spotId/bookings", restoreUser, async (req, res) => {
 
   return res.status(200).json({ Bookings: ownerBookings });
 });
-
+/////////////////////////////////////////////////////////////////////////////////////////////
 module.exports = router;

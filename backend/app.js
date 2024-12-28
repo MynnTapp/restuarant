@@ -1,3 +1,4 @@
+
 const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
@@ -5,35 +6,30 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const app = express();
 const routes = require("./routes/api");
 const { environment } = require("./config");
-const isProduction = environment === "production";
 const { ValidationError } = require("sequelize");
-const csrfRouter = require("./routes/api/index");
 const { restoreUser, refreshToken } = require("./utils/auth");
 
+const app = express();
+const isProduction = environment === "production";
+
+// Logging and Parsing
 app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
-app.use("/api", csrfRouter);
-app.use(restoreUser);
-app.use(refreshToken);
 
 // Security Middleware
 if (!isProduction) {
-  // enable cors only in development
   app.use(cors());
 }
-
-// helmet helps set a variety of headers to better secure your app
 app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin",
   })
 );
 
-// Set the _csrf token and create req.csrfToken method
+// CSRF Middleware (global, applied to all routes)
 app.use(
   csurf({
     cookie: {
@@ -44,9 +40,21 @@ app.use(
   })
 );
 
-app.use(routes);
+// Define the `/api/csrf/restore` route AFTER the csurf middleware
+app.use("/api/csrf/restore", (req, res) => {
+  const csrfToken = req.csrfToken();
+  res.cookie("XSRF-TOKEN", csrfToken);
+  res.status(200).json({ "XSRF-Token": csrfToken });
+});
 
-// Catch unhandled requests and forward to error handler.
+// Custom Middleware
+app.use(restoreUser);
+app.use(refreshToken);
+
+// Routes
+app.use("/api", routes);
+
+// Error Handling
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
@@ -55,12 +63,10 @@ app.use((_req, _res, next) => {
   next(err);
 });
 
-// Process sequelize errors
 app.use((err, _req, _res, next) => {
-  // check if error is a Sequelize error:
   if (err instanceof ValidationError) {
-    let errors = {};
-    for (let error of err.errors) {
+    const errors = {};
+    for (const error of err.errors) {
       errors[error.path] = error.message;
     }
     err.title = "Validation error";
@@ -69,16 +75,12 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-// RETURN TO COMMENT OUT TITLE AND STACK
-// Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
   res.json({
-    // title: err.title || "Server Error",
     message: err.message,
     errors: err.errors,
-    // stack: isProduction ? null : err.stack,
   });
 });
 

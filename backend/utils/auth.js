@@ -32,6 +32,33 @@ const setTokenCookie = (res, user) => {
   return token;
 };
 
+// const restoreUser = (req, res, next) => {
+//   // token parsed from cookies
+//   const { token } = req.cookies;
+//   req.user = null;
+
+//   return jwt.verify(token, secret, null, async (err, jwtPayload) => {
+//     if (err) {
+//       return next();
+//     }
+
+//     try {
+//       const { id } = jwtPayload.data;
+//       req.user = await User.findByPk(id, {
+//         attributes: {
+//           include: ["email", "createdAt", "updatedAt"],
+//         },
+//       });
+//     } catch (e) {
+//       res.clearCookie("token");
+//       return next();
+//     }
+
+//     if (!req.user) res.clearCookie("token");
+
+//     return next();
+//   });
+// };
 
 const restoreUser = (req, res, next) => {
   // Parse token from cookies
