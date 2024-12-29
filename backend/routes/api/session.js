@@ -50,7 +50,6 @@ router.post("/", validateLogin, async (req, res, next) => {
       const err = new Error("Invalid credentials");
       err.status = 401;
       err.title = "Login failed";
-      err.errors = { credential: "Invalid credentials" };
       return next(err);
     }
 
@@ -79,29 +78,6 @@ router.post("/", validateLogin, async (req, res, next) => {
 });
 
 
-
-// Route to get the current logged-in user
-// router.get("/", restoreUser, async (req, res) => {
-//   if (!req.user) {
-//     return res.status(200).json({ user: null });
-//   }
-
-//   // User data is available via req.user after restoreUser middleware
-//   const user = req.user
-
-//   // Return only user information
-//   return res.status(200).json({
-//     user: {
-//       id: user.id,
-//       firstName: user.firstName,
-//       lastName: user.lastName,
-//       email: user.email,
-//       username: user.username,
-//       createdAt: user.createdAt,
-//       updatedAt: user.updatedAt,
-//     },
-//   });
-// });
 
 
 // Route to get the current logged-in user
