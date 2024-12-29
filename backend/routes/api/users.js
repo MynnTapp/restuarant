@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Middleware
 const validateSignup = [
-  check("email").exists({ checkFalsy: true }).isEmail().withMessage("Please provide a valid email."),
+  check("email").exists({ checkFalsy: true }).isEmail().withMessage("Invalid email."),
   check("username").exists({ checkFalsy: true }).isLength({ min: 4 }).withMessage("Username is required"),
   check("username").not().isEmail().withMessage("Username cannot be an email."),
   check("firstName").exists({ checkFalsy: true }).withMessage("First Name is required."),
@@ -18,9 +18,32 @@ const validateSignup = [
   handleValidationErrors,
 ];
 
+
 router.post("/", validateSignup, async (req, res) => {
   const { email, password, username, firstName, lastName } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
+  const errors = {};
+
+  // Check if email already exists
+  const emailExists = await User.findOne({ where: { email } });
+  if (emailExists) {
+    errors.email = "User with that email already exists";
+  }
+
+  // Check if username already exists
+  const usernameExists = await User.findOne({ where: { username } });
+  if (usernameExists) {
+    errors.username = "User with that username already exists";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return res.status(500).json({
+      message: "User already exists",
+      errors,
+    });
+  }
+
+  // Proceed to create user if no validation errors
   try {
     const user = await User.create({ email, firstName, lastName, username, hashedPassword });
     const safeUser = {
@@ -35,25 +58,9 @@ router.post("/", validateSignup, async (req, res) => {
       user: safeUser,
     });
   } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      const errors = {};
-      error.errors.forEach((err) => {
-        if (err.path === "email") {
-          errors.email = "User with that email already exists";
-        }
-        if (err.path === "username") {
-          errors.username = "User with that username already exists";
-        }
-      });
-
-      
-      return res.status(500).json({
-        message: "User already exists",
-        errors,
-      });
-    }
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 module.exports = router;

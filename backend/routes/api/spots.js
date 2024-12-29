@@ -158,7 +158,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
       };
     });
 
-    return res.status(200).json({ page: page, size: size, Spots: allSpotsArray });
+    return res.status(200).json({Spots: allSpotsArray });
   } catch (error) {
     next(error);
   }
@@ -350,7 +350,7 @@ router.get("/:spotId", async (req, res, next) => {
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
       numReviews: parseInt(aggregateStats.numReviews) || 0, // aggregate
-      avgStarRating: parseFloat(aggregateStats.avgStarRating).toFixed(1) || 0, // aggregate
+      avgStarRating: parseInt(aggregateStats.avgStarRating).toFixed(1) || 0, // aggregate
       SpotImages: spot.SpotImages, // array
       Owner: {
         // alias assocation
