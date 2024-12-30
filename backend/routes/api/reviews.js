@@ -140,7 +140,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
     if (existingReview.userId !== req.user.id) {
       return res.status(403).json({ message: "User is not authorized to edit this review" });
     }
-
+   
     existingReview.review = review;
     existingReview.stars = stars;
 
@@ -171,7 +171,7 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
     res.status(200).json({ message: "Successfully deleted" });
   } catch (err) {
-    res.status(500).json({ message: "An error occurred while deleting the review" });
+    res.status(500).json({ message: "An error occurred while deleting the review", error: err});
   }
 });
 

@@ -15,7 +15,7 @@ const ValidateSpotEdit = [
   check("country").exists({ checkFalsy: true }).withMessage("Country is required"),
   check("lat").exists({ checkFalsy: true }).isNumeric().withMessage("Latitude is not valid"),
   check("lng").exists({ checkFalsy: true }).isNumeric().withMessage("Longitude is not valid"),
-  check("name").exists({ checkFalsy: true }).withMessage("Name must be less than 50 characters"),
+  check("name").exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage("Name must be less than 50 characters"),
   check("description").exists({ checkFalsy: true }).withMessage("Description is required"),
   check("price").exists({ checkFalsy: true }).isNumeric().withMessage("Price per day is required"),
   handleValidationErrors,
@@ -29,7 +29,7 @@ const validateQueryParams = [
     .optional()
     .isFloat({ max: 90 })
     .custom((val, { req }) => parseFloat(req.query.minLat ?? -90) < parseFloat(req.query.maxLat))
-    .withMessage("Maximum latitude must be between -90 to 90 and greater than minimum latitude if specified"),
+    .withMessage("Maximum latitude must be between -90 to 90 and greater than minimum latitude"),
   check("minLng").optional().isFloat({ min: -180, max: 180 }).withMessage("Minimum longitude must be between -180 to 180"),
   check("maxLng")
     .optional()
@@ -42,7 +42,7 @@ const validateQueryParams = [
     .optional()
     .isFloat()
     .custom((val, { req }) => (req.query.minPrice ?? 0) < req.query.maxPrice)
-    .withMessage("Maximum price must be greater than 0 and greater than minimum price if specified"),
+    .withMessage("Maximum price must be greater than 0 and greater than minimum price"),
   handleValidationErrors,
 ];
 
@@ -166,14 +166,14 @@ router.get("/", validateQueryParams, async (req, res, next) => {
 
 /**** Validate Create Spot POST body ****/
 const validateSpotData = [
-  check("address").exists({ checkFalsy: true }).isString().withMessage("Street address is required"),
-  check("city").exists({ checkFalsy: true }).isString().withMessage("City is required"),
-  check("state").exists({ checkFalsy: true }).isString().withMessage("State is required"),
-  check("country").exists({ checkFalsy: true }).isString().withMessage("Country is required"),
-  check("lat").exists({ checkFalsy: true }).isFloat({ min: -90, max: 90 }).withMessage("Latitude must must be between -90 to 90"),
-  check("lng").exists({ checkFalsy: true }).isFloat({ min: -180, max: 180 }).withMessage("Longitude must be between -180 to 180"),
-  check("name").exists({ checkFalsy: true }).isString().isLength({ max: 50 }).withMessage("Name must be less than 50 characters"),
-  check("description").exists({ checkFalsy: true }).isString().withMessage("Description is required"),
+  check("address").exists({ checkFalsy: true }).withMessage("Street address is required"),
+  check("city").exists({ checkFalsy: true }).withMessage("City is required"),
+  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
+  check("country").exists({ checkFalsy: true }).withMessage("Country is required"),
+  check("lat").exists({ checkFalsy: true }).isFloat({ min: -90, max: 90 }).withMessage("Latitude is not valid"),
+  check("lng").exists({ checkFalsy: true }).isFloat({ min: -180, max: 180 }).withMessage("Longitude is no valid"),
+  check("name").exists({ checkFalsy: true }).isLength({ max: 50 }).withMessage("Name must be less than 50 characters"),
+  check("description").exists({ checkFalsy: true }).withMessage("Description is required"),
   check("price").exists({ checkFalsy: true }).isFloat({ gt: 0 }).withMessage("Price per day must be a positive number"),
   handleValidationErrors,
 ];
@@ -296,12 +296,83 @@ router.get("/current", restoreUser, requireAuth, async (req, res, next) => {
 });
 
 /**** GET spot details on id ****/
+// router.get("/:spotId", async (req, res, next) => {
+//   // get spot id to parse
+//   const { spotId } = req.params;
+
+//   try {
+//     // Capture spot deatils including associated images and owner details
+//     const spot = await Spot.findOne({
+//       where: { id: spotId },
+//       include: [
+//         {
+//           model: SpotImage,
+//           attributes: ["id", "url", "preview"],
+//         },
+//         {
+//           model: User,
+//           as: "Owner",
+//           attributes: ["id", "firstName", "lastName"],
+//         },
+//       ],
+//     });
+
+//     // Return 404 if spot not found
+//     if (!spot) {
+//       return res.status(404).json({
+//         message: "Spot couldn't be found",
+//       });
+//     }
+
+//     // Create aggregate columns on query
+//     const aggregateStats = await Review.findOne({
+//       where: { spotId: spot.id },
+//       attributes: [
+//         [Sequelize.fn("COUNT", Sequelize.col("Review.id")), "numReviews"],
+//         [Sequelize.fn("AVG", Sequelize.col("stars")), "avgStarRating"],
+//       ],
+//     });
+
+//     // Spot details derived from Spots, and spot associations
+//     // with SpotImages, Reviews, and Users.
+//     const detailedResponse = {
+//       id: spot.id,
+//       ownerId: spot.ownerId,
+//       address: spot.address,
+//       city: spot.city,
+//       state: spot.state,
+//       country: spot.country,
+//       lat: spot.lat,
+//       lng: spot.lng,
+//       name: spot.name,
+//       description: spot.description,
+//       price: spot.price,
+//       createdAt: spot.createdAt,
+//       updatedAt: spot.updatedAt,
+//       numReviews: parseInt(aggregateStats.numReviews) || 0, // aggregate
+//       avgStarRating: parseInt(aggregateStats.avgStarRating).toFixed(1) || 0, // aggregate
+//       SpotImages: spot.SpotImages, // array
+//       Owner: {
+//         // alias assocation
+//         id: spot.Owner.id,
+//         firstName: spot.Owner.firstName,
+//         lastName: spot.Owner.lastName,
+//       },
+//     };
+
+//     return res.status(200).json(detailedResponse);
+//   } catch (error) {
+//     return next(error);
+//   }
+// });
+
+
+
 router.get("/:spotId", async (req, res, next) => {
-  // get spot id to parse
   const { spotId } = req.params;
 
   try {
-    // Capture spot deatils including associated images and owner details
+    // Capture spot details including associated images and owner details
     const spot = await Spot.findOne({
       where: { id: spotId },
       include: [
@@ -331,7 +402,12 @@ router.get("/:spotId", async (req, res, next) => {
         [Sequelize.fn("COUNT", Sequelize.col("Review.id")), "numReviews"],
         [Sequelize.fn("AVG", Sequelize.col("stars")), "avgStarRating"],
       ],
+      raw: true, // Add raw: true to get plain object
     });
+
+    // Ensure aggregate values are not null
+    const numReviews = aggregateStats.numReviews ? parseInt(aggregateStats.numReviews) : 0;
+    const avgStarRating = aggregateStats.avgStarRating ? parseFloat(aggregateStats.avgStarRating).toFixed(1) : "0.0";
 
     // Spot details derived from Spots, and spot associations
     // with SpotImages, Reviews, and Users.
@@ -349,11 +425,11 @@ router.get("/:spotId", async (req, res, next) => {
       price: spot.price,
       createdAt: spot.createdAt,
       updatedAt: spot.updatedAt,
-      numReviews: parseInt(aggregateStats.numReviews) || 0, // aggregate
-      avgStarRating: parseInt(aggregateStats.avgStarRating).toFixed(1) || 0, // aggregate
+      numReviews,
+      avgStarRating,
       SpotImages: spot.SpotImages, // array
       Owner: {
-        // alias assocation
+        // alias association
         id: spot.Owner.id,
         firstName: spot.Owner.firstName,
         lastName: spot.Owner.lastName,
@@ -365,6 +441,10 @@ router.get("/:spotId", async (req, res, next) => {
     return next(error);
   }
 });
+
+
+
+
 
 /**** EDIT a spot on id ****/
 router.put("/:spotId", restoreUser, requireAuth, ValidateSpotEdit, async (req, res, next) => {
@@ -382,7 +462,7 @@ router.put("/:spotId", restoreUser, requireAuth, ValidateSpotEdit, async (req, r
   }
 
   if (userId !== spot.ownerId) {
-    return res.status(403).json({ message: "Forbidden" });
+    return res.status(403).json({ message: "Spot must belong to the current user" });
   }
 
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -423,7 +503,7 @@ router.delete("/:spotId", restoreUser, requireAuth, async (req, res, next) => {
   }
 
   if (userId !== dropSpot.ownerId) {
-    return res.status(403).json({ message: "Forbidden" });
+    return res.status(403).json({ message: "Spot must belong to the current user" });
   }
 
   try {
@@ -611,7 +691,7 @@ const validateReview = [
   // do we need to validate id type fields: id, userId, spotId?
   check("review")
     .exists({ checkFalsy: true })
-    .withMessage("Review is required")
+    .withMessage("Review text is required")
     .isString()
     .withMessage("Review must be a string")
     .isLength({ max: 4000 })
@@ -650,6 +730,7 @@ router.post("/:spotId/reviews", restoreUser, requireAuth, validateReview, async 
   try {
     const newReview = await spot.createReview({
       userId,
+      spotId,
       review,
       stars,
     });
