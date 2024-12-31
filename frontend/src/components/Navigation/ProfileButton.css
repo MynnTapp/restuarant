@@ -1,0 +1,36 @@
+/* General button styling for the icon */
+.icon {
+  position: absolute;
+  top: 20px; /* Adjust based on where you want it on the page */
+  right: 70px; /* Align it with the right side, adjust as needed */
+  /* display: inline-block; */
+}
+
+button {
+  width: 60px;
+  height: 60px;
+  color: rgb(242, 49, 107);
+  background-color: rgb(242, 113, 186);
+}
+
+ul {
+  list-style: none;
+  display: flex;
+}
+
+.profile-dropdown {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.hidden {
+  display: none;
+}
+
+.homelink {
+  right: 80px;
+}
