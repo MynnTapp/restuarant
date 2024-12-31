@@ -1,20 +1,30 @@
+import { useRef } from "react";
 import { useModal } from "../../context/Modal";
+import "./OpenModalButton.css";
+import { useSelector } from "react-redux";
 
-function OpenModalButton({
-  modalComponent, // component to render inside the modal
-  buttonText, // text of the button that opens the modal
-  onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
-  onModalClose, // optional: callback function that will be called once the modal is closed
-}) {
+export default function OpenModal({ modalComponent, itemText, buttonText, onItemClick, onButtonClick, onModalClose }) {
   const { setModalContent, setOnModalClose } = useModal();
+  const isDisabled = useRef(true);
+  const user = useSelector((state) => state.session.user);
 
-  const onClick = () => {
+  const handleClick = () => {
     if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
     if (typeof onButtonClick === "function") onButtonClick();
+    if (typeof onItemClick === "function") onItemClick();
   };
 
-  return <button onClick={onClick}>{buttonText}</button>;
-}
+  const setStatus = () => {
+    user ? (isDisabled.current = false) : (isDisabled.current = true);
+    return isDisabled;
+  };
 
-export default OpenModalButton;
+  return !itemText ? (
+    <button onClick={handleClick} data-testid="review-button" className={`modal-button ${isDisabled.current ? "" : "enabled"}`} disabled={setStatus().current}>
+      {buttonText}
+    </button>
+  ) : (
+    <li onClick={handleClick}>{itemText}</li>
+  );
+}

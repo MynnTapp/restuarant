@@ -1,0 +1,41 @@
+/* General reset and base styles */
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+body {
+  background-color: rgb(245, 101, 176);
+}
+.nav-box {
+  margin-bottom: 0;
+  padding: 0.2rem 0.8rem;
+  background-color: rgb(204, 31, 118);
+  border-radius: 1rem;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-bottom: 4rem;
+}
+
+.logo-image {
+  aspect-ratio: 1 / 1.2;
+  width: 3rem;
+}
+
+.image-box {
+  margin-right: 10%;
+}
+
+.active {
+  text-decoration: none;
+}
+
+.welcome {
+  font-size: 2rem;
+  color: rgb(222, 50, 237);
+  font-family: fantasy;
+}

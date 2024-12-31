@@ -39,7 +39,7 @@ export const restoreUser = () => async (dispatch) => {
   };
 
 
-export const logout = () => async (dispatch) => {
+export const signout = () => async (dispatch) => {
   const response = await csrfFetch("/api/session", {
     method: "DELETE",
   });

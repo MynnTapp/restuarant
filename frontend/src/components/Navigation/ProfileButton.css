@@ -1,36 +1,40 @@
-/* General button styling for the icon */
-.icon {
-  position: absolute;
-  top: 20px; /* Adjust based on where you want it on the page */
-  right: 70px; /* Align it with the right side, adjust as needed */
-  /* display: inline-block; */
-}
-
-button {
-  width: 60px;
-  height: 60px;
-  color: rgb(242, 49, 107);
-  background-color: rgb(242, 113, 186);
-}
-
-ul {
-  list-style: none;
-  display: flex;
-}
-
-.profile-dropdown {
-  position: absolute;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-}
+/* Ensure these styles are added to ProfileButton.css */
 
 .hidden {
   display: none;
 }
 
-.homelink {
-  right: 80px;
+.profile-dropdown {
+  list-style-type: none;
+  position: absolute;
+  background-color: rgb(239, 33, 98);
+  padding: 1rem 0.7rem 1rem 0.7rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  height: 6.5em;
+}
+
+.profile-button {
+  width: fit-content;
+  padding: 0.4rem 1.3rem;
+  background-color: #fc4893;
+  box-shadow: 4px 3px 3px inset;
+  border-width: 1px;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+
+.profile-button:hover {
+  background-color: rgb(255, 0, 212);
+  cursor: pointer;
+  box-shadow: rgb(202, 61, 148) 3px 4px 4px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+}
+
+.logout-button {
+  width: fit-content;
+  padding: 0.3rem 0.7rem;
 }

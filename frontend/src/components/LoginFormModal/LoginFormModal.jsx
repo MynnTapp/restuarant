@@ -1,46 +1,62 @@
-import { useState } from "react";
-import * as sessionActions from "../../store/session";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+import { login } from "../../store/session";
 import { useModal } from "../../context/Modal";
 import "./LoginFormModal.css";
 
-function LoginFormModal() {
+export default function LoginFormModal() {
   const dispatch = useDispatch();
+  const isDisabled = useRef(true);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+    const payload = {
+      credential,
+      password,
+    };
+    const data = await dispatch(login(payload));
+    data.message === "Invalid credentials" ? setErrors({ invalid: "The provided credentials were invalid." }) : closeModal();
+  };
+
+  const signIn = async (e) => {
+    e.preventDefault();
+    const payload = {
+      credential: "Demo-lition",
+      password: "password",
+    };
+    await dispatch(login(payload));
+    closeModal();
+  };
+
+  const updateStatus = () => {
+    credential.length < 4 || password.length < 6 ? (isDisabled.current = true) : (isDisabled.current = false);
+    return isDisabled;
   };
 
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input type="text" value={credential} onChange={(e) => setCredential(e.target.value)} required />
-        </label>
-        <label>
-          Password
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+    <div data-testid="login-modal">
+      <div className="headers">Log In</div>
+      <form onSubmit={handleSumbit} className="login-form">
+        <p className="error-message">{errors.invalid ? errors.invalid : ""}</p>
+
+        <label>Username or Email</label>
+        <input type="text" data-testid="credential-input" value={credential} onChange={({ target: { value } }) => setCredential(value)} required />
+
+        <label>Password</label>
+        <input type="password" data-testid="password-input" value={password} onChange={({ target: { value } }) => setPassword(value)} required />
+
+        <button type="submit" disabled={updateStatus().current} data-testid="login-button" className={`login-button ${isDisabled.current ? "" : "enabled"}`}>
+          Log In
+        </button>
       </form>
-    </>
+      <a href="" onClick={signIn} data-testid="demo-user-login" className="demo-user">
+        Log in as Demo User
+      </a>
+    </div>
   );
 }
-
-export default LoginFormModal;
