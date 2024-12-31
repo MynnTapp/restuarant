@@ -1,0 +1,35 @@
+.errors.message {
+  color: red;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  background-color: fuchsia;
+}
+
+.signup-button {
+  background-color: rgb(255, 0, 208);
+  box-shadow: rgb(214, 24, 128) 3px 3px 3px inset;
+  color: rgb(239, 72, 208);
+  padding: 0.7rem 0rem;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border-radius: 1px;
+}
+
+.signup-button:disabled {
+  box-shadow: rgb(167, 41, 169) 3px 3px 3px inset;
+  background-color: #770000;
+}
+
+.signup-button.enabled {
+  box-shadow: black 3px 4px 4px;
+  cursor: pointer;
+}
+
+.signup-button.enabled:hover {
+  box-shadow: none;
+}
