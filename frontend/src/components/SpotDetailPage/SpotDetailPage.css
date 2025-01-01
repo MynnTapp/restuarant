@@ -1,0 +1,28 @@
+.main-spot-content {
+  text-align: left;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(255, 240, 245); /* Light pink background */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgb(255, 182, 193); /* Light pink border */
+}
+
+.preview {
+  width: 50%;
+  height: 22vw;
+  background-color: rgb(255, 182, 193); /* Light pink background */
+  border-radius: 0.5rem;
+  border: 2px solid rgb(255, 105, 180); /* Hot pink border */
+}
+
+.details {
+  display: flex;
+  gap: 1rem; /* Add spacing between child elements */
+}
+
+.divider {
+  border: 1px solid rgb(255, 182, 193); /* Light pink divider */
+  margin-bottom: 2rem;
+}

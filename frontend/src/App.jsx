@@ -46,7 +46,7 @@ import { restoreUser } from "./store/session";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AllTheSpots from "./components/AllTheSpots/AllTheSpots";
-//import SpotDetailPage from "./components/SpotDetailPage";
+import SpotDetailPage from "./components/SpotDetailPage";
 //import SpotForm from "./components/SpotFormPage";
 import { getAllSpots } from "./store/spots";
 
@@ -80,10 +80,10 @@ const router = createBrowserRouter([
           </main>
         ),
       },
-      // {
-      //   path: "spots/:id",
-      //   element: <SpotDetailPage />,
-      // },
+      {
+        path: "spots/:id",
+        element: <SpotDetailPage />,
+      },
       // {
       //   path: "spots/new",
       //   element: <SpotForm isNewSpot={true} />,

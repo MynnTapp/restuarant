@@ -1,0 +1,40 @@
+.booking-block {
+  border: 2px solid rgb(255, 105, 180); /* Pink border */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 2rem;
+  width: 65vw;
+  background-color: rgb(255, 182, 193); /* Light pink background */
+}
+
+.price_reviews {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-button {
+  background-color: rgb(255, 105, 180); /* Hot pink background */
+  color: white; /* White text for contrast */
+  width: 100%;
+  padding: 0.7rem 4rem;
+  margin: 0px auto;
+  font-size: 1rem;
+  border-width: 1px;
+  border: 1px solid rgb(255, 182, 193); /* Border matching the block */
+  transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+}
+
+.booking-button.enabled {
+  box-shadow: rgb(255, 20, 147) 3px 4px 4px; /* Deep pink shadow */
+  background-color: rgb(255, 20, 147); /* Deep pink */
+}
+
+.booking-button.enabled:hover {
+  cursor: pointer;
+  box-shadow: none;
+  background-color: rgb(255, 105, 180); /* Revert to hot pink on hover */
+}

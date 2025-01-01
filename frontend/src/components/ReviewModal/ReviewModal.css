@@ -1,0 +1,51 @@
+.rating-input .filled {
+  color: rgb(255, 105, 180); /* Hot pink for filled stars */
+  cursor: pointer;
+}
+
+.rating-input .empty {
+  color: rgb(255, 182, 193); /* Light pink for empty stars */
+  cursor: pointer;
+}
+
+.rating-input {
+  font-size: 1.4rem;
+  width: fit-content;
+  margin: auto;
+  padding: 0.5rem 0;
+  color: rgb(255, 105, 180); /* Overall pink theme for input container */
+}
+
+#modal-content {
+  padding: 1rem;
+  background-color: rgb(255, 240, 245); /* Light pink background */
+  border: 2px solid rgb(255, 182, 193); /* Light pink border */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for focus */
+}
+
+.review-heading {
+  font-size: 1.7rem;
+  margin-bottom: 0.7rem;
+  color: rgb(255, 20, 147); /* Deep pink for emphasis */
+  text-align: center;
+}
+
+.review-button {
+  outline: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border-width: 1px;
+  border-color: rgb(255, 105, 180); /* Hot pink border */
+  background-color: rgb(255, 182, 193); /* Light pink background */
+  color: rgb(255, 20, 147); /* Deep pink text */
+  box-shadow: rgb(255, 105, 180) 3px 3px 5px; /* Pink shadow */
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.review-button:hover {
+  background-color: rgb(255, 105, 180); /* Hot pink background on hover */
+  color: white; /* White text for contrast */
+  box-shadow: rgb(255, 20, 147) 3px 3px 7px; /* Brighter shadow on hover */
+}

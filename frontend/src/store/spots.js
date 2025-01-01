@@ -32,7 +32,22 @@ const allSpots = (payload) => {
   };
 };
 
+// const normalizer = (payload) => {
+//   const res = {};
+
+//   payload.forEach((ele) => (res[ele.id] = ele));
+
+//   return res;
+// };
+
+
+
 const normalizer = (payload) => {
+  if (!Array.isArray(payload)) {
+    console.error("Payload is not an array:", payload);
+    return {};
+  }
+
   const res = {};
 
   payload.forEach((ele) => (res[ele.id] = ele));
@@ -40,18 +55,44 @@ const normalizer = (payload) => {
   return res;
 };
 
+
+
+
+
 // export const getAllSpots = () => async (dispatch) => {
 //   const res = await csrfFetch("/api/spots");
-//   const spots = [];
-//   for (let i = 0; i < res.Spots.length; i++) {
-//     spots.push(normalizer(res.Spots[i].SpotImages));
+//   const data = await res.json();
+//   console.log("Parsed API Response:", data);
+
+//   if (data && data.Spots && Array.isArray(data.Spots)) {
+//     console.log("Spots array:", data.Spots);
+//     const spots = [];
+//     for (let i = 0; i < data.Spots.length; i++) {
+//       if (data.Spots[i].SpotImages) {
+//         spots.push(normalizer(data.Spots[i].SpotImages));
+//         console.log(`Normalized SpotImages for spot ${i}:`, spots[i]);
+//       }
+//     }
+//     for (let i = 0; i < data.Spots.length; i++) {
+//       data.Spots[i].SpotImages = spots[i] || {};
+//     }
+//     console.log("All Spots after normalization:", data.Spots);
+//     dispatch(allSpots(normalizer(data.Spots)));
 //   }
-//   for (let i = 0; i < res.Spots.length; i++) {
-//     res.Spots[i].SpotImages = spots[i];
-//   }
-//   dispatch(allSpots(normalizer(res.Spots)));
-//   return res;
+//   return data;
 // };
+
+
+
+
+// export const getOneSpot = (id) => async (dispatch) => {
+//   const res = await csrfFetch(`/api/spots/${id}`);
+//   console.log("this is the spot ===> ", res);
+//   const SpotImages = normalizer(res.SpotImages);
+//   res.SpotImages = SpotImages;
+//   dispatch(getSpot(res));
+// };
+
 
 
 
@@ -78,16 +119,21 @@ export const getAllSpots = () => async (dispatch) => {
   return data;
 };
 
-
-
-
 export const getOneSpot = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${id}`);
-  console.log("this is the spot ===> ", res);
-  const SpotImages = normalizer(res.SpotImages);
-  res.SpotImages = SpotImages;
-  dispatch(getSpot(res));
+  const data = await res.json();
+  console.log("Parsed Spot API Response:", data);
+
+  if (data && data.SpotImages) {
+    const SpotImages = normalizer(data.SpotImages);
+    data.SpotImages = SpotImages;
+  }
+  dispatch(getSpot(data));
 };
+
+
+
+
 
 export const addASpot = (spot) => async (dispatch) => {
   const res = await csrfFetch("/api/spots", {
