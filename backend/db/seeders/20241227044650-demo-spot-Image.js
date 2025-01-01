@@ -29,43 +29,23 @@ module.exports = {
         {
           spotId: 2,
           url: "https://api.pizzahut.io/v1/content/en-in/in-1/images/pizza/veggie-supreme-cheese-maxx.9c36faf3796239a077a0a98ba489d7ce.1.jpg",
-          preview: false,
+          preview: true,
         },
         {
           spotId: 3,
           url: "https://www.recipetineats.com/tachyon/2023/05/Garlic-cheese-pizza_9.jpg",
-          preview: false,
+          preview: true,
         },
         {
           spotId: 4,
           url: "https://cdn.usarestaurants.info/assets/uploads/0e2035aecd9cc17a099fc60f52292ca3_-united-states-michigan-macomb-county-warren-sorrento-pizza-586-759-1177htm.jpg",
-          preview: false,
-        },
-        {
-          spotId: 5,
-          url: "Image.png",
-          preview: false,
-        },
-        {
-          spotId: 2,
-          url: "Image.png",
           preview: true,
         },
-        {
-          spotId: 3,
-          url: "Image.png",
-          preview: true,
-        },
-        {
-          spotId: 4,
-          url: "Image.png",
-          preview: true,
-        },
-        {
-          spotId: 5,
-          url: "Image.png",
-          preview: true,
-        },
+        // {
+        //   spotId: 5,
+        //   url: "Image.png",
+        //   preview: false,
+        // },
         {
           spotId: 2,
           url: "Image.png",
@@ -81,8 +61,18 @@ module.exports = {
           url: "Image.png",
           preview: false,
         },
+        // {
+        //   spotId: 5,
+        //   url: "Image.png",
+        //   preview: false,
+        // },
         {
-          spotId: 5,
+          spotId: 2,
+          url: "Image.png",
+          preview: false,
+        },
+        {
+          spotId: 3,
           url: "Image.png",
           preview: false,
         },
@@ -91,11 +81,21 @@ module.exports = {
           url: "Image.png",
           preview: false,
         },
+        // {
+        //   spotId: 5,
+        //   url: "Image.png",
+        //   preview: false,
+        // },
         {
-          spotId: 5,
+          spotId: 4,
           url: "Image.png",
           preview: false,
         },
+        // {
+        //   spotId: 5,
+        //   url: "Image.png",
+        //   preview: false,
+        // },
         {
           spotId: 4,
           url: "Image.png",
