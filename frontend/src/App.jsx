@@ -47,7 +47,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import AllTheSpots from "./components/AllTheSpots/AllTheSpots";
 import SpotDetailPage from "./components/SpotDetailPage";
-//import SpotForm from "./components/SpotFormPage";
+import SpotForm from "./components/SpotsFormPage/SpotForm";
 import { getAllSpots } from "./store/spots";
 
 function Layout() {
@@ -84,10 +84,10 @@ const router = createBrowserRouter([
         path: "spots/:id",
         element: <SpotDetailPage />,
       },
-      // {
-      //   path: "spots/new",
-      //   element: <SpotForm isNewSpot={true} />,
-      // },
+      {
+        path: "spots/new",
+        element: <SpotForm isNewSpot={true} />,
+      },
       {
         path: "spots/current",
         element: (
