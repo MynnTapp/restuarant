@@ -3,6 +3,10 @@ const { SpotImage, Spot } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth.js");
 const router = express.Router();
 
+
+
+
+
 router.delete("/:imageId", requireAuth, async (req, res) => {
   const imageId = req.params.imageId;
   const userId = req.user.id;

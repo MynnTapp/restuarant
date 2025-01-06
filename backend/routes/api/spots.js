@@ -2,11 +2,16 @@ const express = require("express");
 const router = express.Router();
 const { Spot, Review, ReviewImage, SpotImage, User, Booking } = require("../../db/models");
 const { Sequelize, Op } = require("sequelize");
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth.js");
 const { restoreUser } = require("../../utils/auth");
+
+
+
+
+
 
 const ValidateSpotEdit = [
   check("address").exists({ checkFalsy: true }).withMessage("Street address is required"),
@@ -642,49 +647,62 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, validateBooking, asyn
 });
 
 /**** validate spot image ****/
-const validateSpotImage = [
-  check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
-  check("preview").exists().isBoolean().withMessage("Preview must be a boolean value"),
-  handleValidationErrors,
-];
+// const validateSpotImage = [
+//   check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
+//   check("preview").exists({ checkFalsy: true }).withMessage("Preview is required").bail().toBoolean().isBoolean().withMessage("Preview must be a boolean value"),
+//   handleValidationErrors,
+// ];
+
+
+
+// const validateSpotImage = [
+//   check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
+//   check("preview").exists({ checkFalsy: true }).withMessage("Preview is required").bail().toBoolean().isBoolean().withMessage("Preview must be a boolean value"),
+//   (req, res, next) => {
+//     console.log("Request body in validation middleware:", req.body); // Log the request body
+//     handleValidationErrors(req, res, next);
+//   },
+// ];
+
 
 /**** ADD image to spot on id ****/
-router.post("/:spotId/images", restoreUser, requireAuth, validateSpotImage, async (req, res, next) => {
-  const { spotId } = req.params; // spotId to add image at
-  const { user } = req; // current user adding image
-  const { url, preview } = req.body; // image data to add
-  const userId = user.id;
 
+
+
+const validateSpotImage = [
+  check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
+  (req, res, next) => {
+    console.log("Request body in validation middleware:", req.body); // Log the request body
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log("Validation errors:", errors.array()); // Log validation errors
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+router.post("/:spotId/images", validateSpotImage, async (req, res) => {
+  console.log("Request body in route handler:", req.body); // Log the request body
   try {
-    const spot = await Spot.findByPk(spotId);
+    const { url, preview } = req.body;
+    const spotId = req.params.spotId;
 
-    if (!spot) {
-      return res.status(404).json({
-        message: "Spot couldn't be found",
-      });
-    }
-
-    if (spot.ownerId !== userId) {
-      return res.status(403).json({
-        message: "Forbidden: You are not allowed to add images to this spot",
-      });
-    }
-
+    // Assuming you have a SpotImage model
     const newImage = await SpotImage.create({
-      spotId: spot.id,
+      spotId,
       url,
-      preview,
+      preview: preview || false, // Default to false if preview is not provided
     });
 
-    return res.status(201).json({
-      id: newImage.id,
-      url: newImage.url,
-      preview: newImage.preview,
-    });
-  } catch (error) {
-    next(error);
+    res.status(201).json(newImage);
+  } catch (err) {
+    console.error("Error in route handler:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 /**** validate review ****/
 const validateReview = [

@@ -15,7 +15,7 @@ export default function AllTheSpots({ isCurrent }) {
     <div className="content_box" data-testid="spots-list">
       {isCurrent
         ? spots
-            ?.filter((spot) => spot?.Owner?.id === sessionUser?.id)
+            ?.filter((spot) => spot?.OwnerId === sessionUser?.id)
             .map((spot, i) => (
               <div key={i + 1} className="spot-tile" data-testid="spot-tile">
                 <img src={spot?.previewImage} onClick={() => navigateTo(`/spots/${spot?.id}`)} className="spot-image" alt="Image Not Found"></img>

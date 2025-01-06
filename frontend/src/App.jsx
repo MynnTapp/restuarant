@@ -97,10 +97,10 @@ const router = createBrowserRouter([
           </>
         ),
       },
-      // {
-      //   path: "spots/:id/edit",
-      //   element: <SpotForm isNewSpot={false} />,
-      // },
+      {
+        path: "spots/:id/edit",
+        element: <SpotForm isNewSpot={false} />,
+      },
     ],
   },
 ]);
