@@ -738,32 +738,71 @@ router.post("/:spotId/images", validateSpotImage, async (req, res) => {
 });
 
 // Route to update images for a specific spot
+// router.put("/:spotId/images", validateSpotImage, async (req, res) => {
+//   console.log("Request body in update route handler:", req.body); // Log the request body
+//   try {
+//     const spotId = req.params.spotId;
+//     const images = req.body;
+
+//     // Assuming you have a SpotImage model
+//     await SpotImage.destroy({ where: { spotId } }); // Delete existing images
+
+//     const updatedImages = await Promise.all(
+//       images.map(async (image) => {
+//         const newImage = await SpotImage.create({
+//           spotId,
+//           url: image.url,
+//           preview: image.preview || false,
+//         });
+//         return newImage;
+//       })
+//     );
+
+//     res.status(200).json(updatedImages);
+//   } catch (err) {
+//     console.error("Error in update route handler:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+
+const sequelize = require("sequelize");
+
 router.put("/:spotId/images", validateSpotImage, async (req, res) => {
-  console.log("Request body in update route handler:", req.body); // Log the request body
+  const transaction = await sequelize.transaction();
   try {
     const spotId = req.params.spotId;
     const images = req.body;
 
-    // Assuming you have a SpotImage model
-    await SpotImage.destroy({ where: { spotId } }); // Delete existing images
+    // Validate images array
+    if (!Array.isArray(images) || images.some((img) => !img.url)) {
+      return res.status(400).json({ error: "Invalid image data" });
+    }
 
-    const updatedImages = await Promise.all(
-      images.map(async (image) => {
-        const newImage = await SpotImage.create({
-          spotId,
-          url: image.url,
-          preview: image.preview || false,
-        });
-        return newImage;
-      })
+    // Delete existing images
+    await SpotImage.destroy({ where: { spotId }, transaction });
+
+    // Bulk create new images
+    const updatedImages = await SpotImage.bulkCreate(
+      images.map((image) => ({
+        spotId,
+        url: image.url,
+        preview: image.preview || false,
+      })),
+      { transaction }
     );
 
+    // Commit transaction
+    await transaction.commit();
     res.status(200).json(updatedImages);
   } catch (err) {
+    // Rollback transaction on error
+    if (transaction) await transaction.rollback();
     console.error("Error in update route handler:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 
 
@@ -786,10 +825,51 @@ const validateReview = [
 ];
 
 /**** CREATE review on spot id  ****/
+// router.post("/:spotId/reviews", restoreUser, requireAuth, validateReview, async (req, res, next) => {
+//   const { spotId } = req.params; // retireve spotId to add review at
+//   const { review, stars } = req.body; // retrieve info to populate review
+//   const { user } = req; // current user adding image
+//   const userId = user.id;
+
+//   const spot = await Spot.findByPk(spotId);
+
+//   if (!spot) {
+//     return res.status(404).json({
+//       message: "Spot couldn't be found",
+//     });
+//   }
+
+//   const spotReviews = await Review.findAll({
+//     where: {
+//       [Op.and]: [{ spotId: spotId }, { userId: userId }],
+//     },
+//   });
+
+//   if (spotReviews.length) {
+//     return res.status(500).json({
+//       message: "User already has a review for this spot",
+//     });
+//   }
+
+//   try {
+//     const newReview = await spot.createReview({
+//       userId,
+//       spotId,
+//       review,
+//       stars,
+//     });
+
+//     return res.status(201).json(newReview);
+//   } catch (e) {
+//     return next(e);
+//   }
+// });
+
+
 router.post("/:spotId/reviews", restoreUser, requireAuth, validateReview, async (req, res, next) => {
-  const { spotId } = req.params; // retireve spotId to add review at
+  const { spotId } = req.params; // retrieve spotId to add review at
   const { review, stars } = req.body; // retrieve info to populate review
-  const { user } = req; // current user adding image
+  const { user } = req; // current user adding review
   const userId = user.id;
 
   const spot = await Spot.findByPk(spotId);
@@ -800,31 +880,16 @@ router.post("/:spotId/reviews", restoreUser, requireAuth, validateReview, async 
     });
   }
 
-  const spotReviews = await Review.findAll({
-    where: {
-      [Op.and]: [{ spotId: spotId }, { userId: userId }],
-    },
+  const newReview = await Review.create({
+    review,
+    stars,
+    spotId,
+    userId,
   });
 
-  if (spotReviews.length) {
-    return res.status(500).json({
-      message: "User already has a review for this spot",
-    });
-  }
-
-  try {
-    const newReview = await spot.createReview({
-      userId,
-      spotId,
-      review,
-      stars,
-    });
-
-    return res.status(201).json(newReview);
-  } catch (e) {
-    return next(e);
-  }
+  res.status(201).json(newReview);
 });
+
 
 /**** GET reviews by spot's id ****/
 router.get("/:spotId/reviews", async (req, res) => {

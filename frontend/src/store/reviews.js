@@ -75,16 +75,34 @@ export const getAllReviews = (id) => async (dispatch) => {
 
 
 
+// export const createReview = (review, id) => async (dispatch) => {
+//   const options = {
+//     method: "POST",
+//     body: JSON.stringify(review),
+//   };
+//   const res = await csrfFetch(`/api/spots/${id}/reviews`, options);
+//   if (!res.message) {
+//     dispatch(add(res));
+//   }
+// };
+
+
 export const createReview = (review, id) => async (dispatch) => {
   const options = {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(review),
   };
   const res = await csrfFetch(`/api/spots/${id}/reviews`, options);
-  if (!res.message) {
-    dispatch(add(res));
+  const data = await res.json();
+
+  if (res.ok) {
+    dispatch(add(data)); // Add the review directly
+    dispatch(getAllReviews(id)); // Refresh reviews for consistency
+    return data;
   }
 };
+
 
 export const deleteReview = (id) => async (dispatch) => {
   await csrfFetch(`/api/reviews/${id}`, {

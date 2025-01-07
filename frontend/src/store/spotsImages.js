@@ -111,23 +111,25 @@ export const addTheImages = (payload, id) => async (dispatch) => {
 };
 
 
-
 export const updateImages = (images, spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(images),
-  });
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(images),
+    });
 
-  if (response.ok) {
-    const updatedImages = await response.json();
-    dispatch(updateImagesForSpot(spotId, updatedImages));
+    if (response.ok) {
+      const updatedImages = await response.json();
+      dispatch(updateImagesForSpot(spotId, updatedImages));
+    } else {
+      const error = await response.json();
+      console.error("Error updating images:", error);
+    }
+  } catch (err) {
+    console.error("Network error while updating images:", err);
   }
 };
-
-
 
 
 // Reducer to handle the images update for a specific spot
