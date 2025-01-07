@@ -27,8 +27,6 @@ export default function Reviews({ spot }) {
     }
   }, [dispatch, spot]);
 
-  reviewsArr.forEach((review) => console.log("Review:", review)); // Debugging
-
   return (
     <>
       {reviewsArr.length > 0 ? (

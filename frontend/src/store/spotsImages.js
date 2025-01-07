@@ -102,7 +102,6 @@ export const addTheImages = (payload, id) => async (dispatch) => {
     )
   );
 
-  console.log("This is the actual Images array", res);
 
   // Dispatch the action to add each new image to the specific spot
   res.forEach((image) => {

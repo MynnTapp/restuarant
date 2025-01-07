@@ -83,15 +83,10 @@ export default function SpotDetailPage() {
     dispatch(getAllReviews(id));
   }, [dispatch, id]);
 
-  console.log("Spot:", spot);
-  console.log("Reviews:", reviews);
-  console.log("Images:", images);
-
   if (!spot || !reviews) return <h1>Loading...</h1>;
 
   const reviewsArr = Object.values(reviews ? reviews : []);
   const imagesArr = Object.values(images ? images : []);
-  console.log("this is the Images array", imagesArr);
 
   return (
     <div className="the-page">

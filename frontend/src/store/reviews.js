@@ -43,7 +43,6 @@ const normalizer = (data) => {
   }
 
   const res = {};
-  console.log(data);
   data.forEach((ele) => (res[ele.id] = ele));
 
   return res;
@@ -64,7 +63,7 @@ const normalizer = (data) => {
 export const getAllReviews = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/spots/${id}/reviews`);
   const data = await res.json();
-  console.log("Parsed Reviews API Response:", data);
+  
 
   if (data && data.Reviews && Array.isArray(data.Reviews)) {
     dispatch(getAll(normalizer(data.Reviews)));

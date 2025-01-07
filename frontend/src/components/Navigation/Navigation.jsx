@@ -8,7 +8,6 @@ const spotsSelector = createSelector([(state) => state.session], (session) => se
 
 export default function Navigation({ isLoaded }) {
   const sessionUser = useSelector(spotsSelector);
-  console.log(sessionUser);
   return (
     <ul className="nav-box">
       <li className="image-box">

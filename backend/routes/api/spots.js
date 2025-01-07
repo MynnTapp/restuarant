@@ -718,7 +718,6 @@ const validateSpotImage = [
 
 // Route to add images to a specific spot
 router.post("/:spotId/images", validateSpotImage, async (req, res) => {
-  console.log("Request body in route handler:", req.body); // Log the request body
   try {
     const { url, preview } = req.body;
     const spotId = req.params.spotId;

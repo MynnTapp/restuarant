@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 export default function CalloutBox({ spot, reviews }) {
   const user = useSelector((state) => state.session.user);
   const isDisabled = useRef(true);
-  console.log("this is the spot ===> ", spot);
   const setStatus = () => {
     user ? (isDisabled.current = false) : (isDisabled.current = true);
     return isDisabled;

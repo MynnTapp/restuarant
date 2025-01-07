@@ -64,7 +64,6 @@ const restoreUser = async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
-    console.log("No token found in cookies");
     req.user = null; // Explicitly set req.user to null
     return next(); // Proceed without restoring user
   }
@@ -79,14 +78,11 @@ const restoreUser = async (req, res, next) => {
 
     if (user) {
       req.user = user; // Attach user object to req
-      console.log(`User restored: ${user.username}`);
     } else {
       req.user = null; // User not found, ensure req.user is null
       res.clearCookie("token"); // Clear the invalid token
-      console.log("User not found in database");
     }
   } catch (err) {
-    console.log("Error during token verification or user lookup:", err);
     req.user = null; // On any error, set req.user to null
     res.clearCookie("token"); // Clear the invalid token
   }
