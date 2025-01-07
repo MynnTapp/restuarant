@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addASpot, getOneSpot, updateSpot } from "../../store/spots";
@@ -9,9 +9,6 @@ export default function SpotForm({ isNewSpot }) {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { id } = useParams();
-  const spot = useSelector((state) => state.spots[id]) || {};
-
-  const memoizedSpot = useMemo(() => spot, [spot]);
 
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
@@ -35,21 +32,22 @@ export default function SpotForm({ isNewSpot }) {
     }
   }, [dispatch, id, isNewSpot]);
 
-  useEffect(() => {
-    if (memoizedSpot && !isNewSpot) {
-      setAddress(memoizedSpot.address || "");
-      setCity(memoizedSpot.city || "");
-      setState(memoizedSpot.state || "");
-      setCountry(memoizedSpot.country || "");
-      setLat(memoizedSpot.lat || 0);
-      setLng(memoizedSpot.lng || 0);
-      setDescription(memoizedSpot.description || "");
-      setName(memoizedSpot.name || "");
-      setPrice(memoizedSpot.price || 1);
-      setPreviewImg(memoizedSpot.previewImage || "");
-    }
-  }, [memoizedSpot, isNewSpot]);
+  const spot = useSelector((state) => state.spots[id]);
 
+  useEffect(() => {
+    if (spot && !isNewSpot) {
+      setAddress(spot.address || "");
+      setCity(spot.city || "");
+      setState(spot.state || "");
+      setCountry(spot.country || "");
+      setLat(spot.lat || 0);
+      setLng(spot.lng || 0);
+      setDescription(spot.description || "");
+      setName(spot.name || "");
+      setPrice(spot.price || 1);
+      setPreviewImg(spot.previewImage || "");
+    }
+  }, [id, isNewSpot, dispatch, spot]);
   const getErrors = (e) => {
     e.preventDefault();
     const imgRegex = /\.(jpg|jpeg|png)$/m;
