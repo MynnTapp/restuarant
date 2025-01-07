@@ -669,19 +669,54 @@ router.post("/:spotId/bookings", restoreUser, requireAuth, validateBooking, asyn
 
 
 
+// const validateSpotImage = [
+//   check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
+//   (req, res, next) => {
+//     console.log("Request body in validation middleware:", req.body); // Log the request body
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       console.log("Validation errors:", errors.array()); // Log validation errors
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     next();
+//   },
+// ];
+
+
 const validateSpotImage = [
-  check("url").exists({ checkFalsy: true }).withMessage("Image url is required"),
+  check("images").isArray({ min: 1 }).withMessage("At least one image is required"),
+  check("images.*.url").isURL().withMessage("Each image URL must be valid"),
   (req, res, next) => {
-    console.log("Request body in validation middleware:", req.body); // Log the request body
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log("Validation errors:", errors.array()); // Log validation errors
       return res.status(400).json({ errors: errors.array() });
     }
     next();
   },
 ];
 
+// router.post("/:spotId/images", validateSpotImage, async (req, res) => {
+//   console.log("Request body in route handler:", req.body); // Log the request body
+//   try {
+//     const { url, preview } = req.body;
+//     const spotId = req.params.spotId;
+
+//     // Assuming you have a SpotImage model
+//     const newImage = await SpotImage.create({
+//       spotId,
+//       url,
+//       preview: preview || false, // Default to false if preview is not provided
+//     });
+
+//     res.status(201).json(newImage);
+//   } catch (err) {
+//     console.error("Error in route handler:", err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+
+// Route to add images to a specific spot
 router.post("/:spotId/images", validateSpotImage, async (req, res) => {
   console.log("Request body in route handler:", req.body); // Log the request body
   try {
@@ -701,6 +736,38 @@ router.post("/:spotId/images", validateSpotImage, async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+// Route to update images for a specific spot
+router.put("/:spotId/images", validateSpotImage, async (req, res) => {
+  console.log("Request body in update route handler:", req.body); // Log the request body
+  try {
+    const spotId = req.params.spotId;
+    const images = req.body;
+
+    // Assuming you have a SpotImage model
+    await SpotImage.destroy({ where: { spotId } }); // Delete existing images
+
+    const updatedImages = await Promise.all(
+      images.map(async (image) => {
+        const newImage = await SpotImage.create({
+          spotId,
+          url: image.url,
+          preview: image.preview || false,
+        });
+        return newImage;
+      })
+    );
+
+    res.status(200).json(updatedImages);
+  } catch (err) {
+    console.error("Error in update route handler:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+
+
 
 
 

@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { addASpot } from "../../store/spots";
-import "./SpotForm.css";
+import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { addASpot, getOneSpot, updateSpot } from "../../store/spots";
 import { addTheImages } from "../../store/spotsImages";
+import "./SpotForm.css";
 
 export default function SpotForm({ isNewSpot }) {
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
   const { id } = useParams();
+  const spot = useSelector((state) => state.spots[id]) || {};
+
+  const memoizedSpot = useMemo(() => spot, [spot]);
+
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -24,9 +28,27 @@ export default function SpotForm({ isNewSpot }) {
   const [img4, setImg4] = useState("");
   const [img5, setImg5] = useState("");
   const [errors, setErrors] = useState({});
-  //   const spot = useSelector((state) => state.spots[id ? id : 0]);
-  const spotId = id ? id : 0;
-  const spot = useSelector((state) => state.spots[spotId]);
+
+  useEffect(() => {
+    if (!isNewSpot && id) {
+      dispatch(getOneSpot(id));
+    }
+  }, [dispatch, id, isNewSpot]);
+
+  useEffect(() => {
+    if (memoizedSpot && !isNewSpot) {
+      setAddress(memoizedSpot.address || "");
+      setCity(memoizedSpot.city || "");
+      setState(memoizedSpot.state || "");
+      setCountry(memoizedSpot.country || "");
+      setLat(memoizedSpot.lat || 0);
+      setLng(memoizedSpot.lng || 0);
+      setDescription(memoizedSpot.description || "");
+      setName(memoizedSpot.name || "");
+      setPrice(memoizedSpot.price || 1);
+      setPreviewImg(memoizedSpot.previewImage || "");
+    }
+  }, [memoizedSpot, isNewSpot]);
 
   const getErrors = (e) => {
     e.preventDefault();
@@ -48,30 +70,6 @@ export default function SpotForm({ isNewSpot }) {
     if (img5 && !imgRegex.test(img5)) errors.img5 = "Image URL must end in .png, .jpg, or .jpeg";
     Object.values(errors).length ? setErrors(errors) : handleSubmit();
   };
-
-  // const handleSubmit = async () => {
-  //   const imagesPayload = [{ url: previewImg, preview: true }, { url: img2 }, { url: img3 }, { url: img4 }, { url: img5 }].map((ele) => {
-  //     if (!ele.url) ele.url = "dummyData.png";
-  //     return ele;
-  //   });
-
-  //   const payload = {
-  //     address,
-  //     city,
-  //     state,
-  //     country,
-  //     lat,
-  //     lng,
-  //     name,
-  //     price,
-  //     description,
-  //   };
-
-  //   const spot = await dispatch(addASpot(payload));
-  //   if (!spot) return <h1>Loading...</h1>;
-  //   await dispatch(addTheImages(imagesPayload, spot.id));
-  //   navigateTo(`/spots/${spot.id}`);
-  // };
 
   const handleSubmit = async () => {
     const imagesPayload = [
@@ -97,9 +95,15 @@ export default function SpotForm({ isNewSpot }) {
       description,
     };
 
-    const spot = await dispatch(addASpot(payload));
-    if (!spot) return <h1>Loading...</h1>;
-    await dispatch(addTheImages(imagesPayload, spot.id));
+    let spot;
+    if (isNewSpot) {
+      spot = await dispatch(addASpot(payload));
+      if (!spot) return <h1>Loading...</h1>;
+      await dispatch(addTheImages(imagesPayload, spot.id));
+    } else {
+      spot = await dispatch(updateSpot(id, payload));
+      if (!spot) return <h1>Loading...</h1>;
+    }
     navigateTo(`/spots/${spot.id}`);
   };
 
@@ -112,19 +116,18 @@ export default function SpotForm({ isNewSpot }) {
         <label>
           Country <span className="errors message">{errors.country ? errors.country : ""}</span>
         </label>
-        <input type="text" placeholder="Country" value={spot ? spot.country : country} onChange={({ target: { value } }) => setCountry(value)} />
+        <input type="text" placeholder="Country" value={country} onChange={({ target: { value } }) => setCountry(value)} />
         <label>
           Street Address <span className="errors message">{errors.address ? errors.address : ""}</span>
         </label>
-
-        <input type="text" placeholder="Street Address" value={spot ? spot.address : address} onChange={({ target: { value } }) => setAddress(value)} />
+        <input type="text" placeholder="Street Address" value={address} onChange={({ target: { value } }) => setAddress(value)} />
         <div className="city-state">
           <div className="city">
             <label>
               City <span className="errors message">{errors.city ? errors.city : ""}</span>
             </label>
             <br />
-            <input type="text" placeholder="City" value={spot ? spot.city : city} onChange={({ target: { value } }) => setCity(value)} className="city-input" />
+            <input type="text" placeholder="City" value={city} onChange={({ target: { value } }) => setCity(value)} className="city-input" />
             <span className="comma">,</span>
           </div>
           <div className="state">
@@ -132,17 +135,16 @@ export default function SpotForm({ isNewSpot }) {
               State <span className="errors message">{errors.state ? errors.state : ""}</span>
             </label>
             <br />
-            <input type="text" placeholder="STATE" value={spot ? spot.state : state} onChange={({ target: { value } }) => setState(value)} />
+            <input type="text" placeholder="STATE" value={state} onChange={({ target: { value } }) => setState(value)} />
           </div>
         </div>
-
         <div className="lat-lng">
           <div className="lat">
             <label>
               Latitude <span className="errors message"></span>
             </label>
             <br />
-            <input type="number" value={spot ? spot.lat : lat} onChange={({ target: { value } }) => setLat(value)} />
+            <input type="number" value={lat} onChange={({ target: { value } }) => setLat(value)} />
             <span className="comma">,</span>
           </div>
           <div className="lng">
@@ -150,40 +152,31 @@ export default function SpotForm({ isNewSpot }) {
               Longitude <span className="errors message"></span>
             </label>
             <br />
-            <input type="number" value={spot ? spot.lng : lng} onChange={({ target: { value } }) => setLng(value)} />
+            <input type="number" value={lng} onChange={({ target: { value } }) => setLng(value)} />
           </div>
         </div>
       </div>
-
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>Describe your place to guests</h3>
       <p>Mention the best features of your space, and special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
-      <textarea
-        className="description"
-        type="text"
-        minLength="30"
-        placeholder="Please write at least 30 characters"
-        value={spot ? spot.description : description}
-        onChange={({ target: { value } }) => setDescription(value)}
-      />
+      <textarea className="description" type="text" minLength="30" placeholder="Please write at least 30 characters" value={description} onChange={({ target: { value } }) => setDescription(value)} />
       {errors.description ? <div className="errors message">{errors.description}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>Create a title for your spot</h3>
       <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
-      <input type="text" placeholder="Name of your spot" value={spot ? spot.name : name} onChange={({ target: { value } }) => setName(value)} />
+      <input type="text" placeholder="Name of your spot" value={name} onChange={({ target: { value } }) => setName(value)} />
       {errors.name ? <div className="errors message">{errors.name}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>Set a base price for your spot</h3>
       <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
       <div>
         <span>$ </span>
-        <input type="number" min="1" value={spot ? spot.price : price} placeholder="Price per night (USD)" onChange={({ target: { value } }) => setPrice(Number(value))} />
+        <input type="number" min="1" value={price} placeholder="Price per night (USD)" onChange={({ target: { value } }) => setPrice(Number(value))} />
       </div>
       {errors.price ? <div className="errors message">{errors.price}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>Liven up your spot with photos</h3>
       <p>Submit a link to at least one photo to publish your spot.</p>
-
       <div
         style={{
           display: "flex",
@@ -191,7 +184,7 @@ export default function SpotForm({ isNewSpot }) {
           maxWidth: "50%",
         }}
       >
-        <input type="text" placeholder="Preview Image URL" value={spot ? spot.previewImage : previewImg} onChange={({ target: { value } }) => setPreviewImg(value)} />
+        <input type="text" placeholder="Preview Image URL" value={previewImg} onChange={({ target: { value } }) => setPreviewImg(value)} />
         {errors.previewImg1 && <div className="errors message">{errors.previewImg1}</div>}
         {errors.previewImg2 && <div className="errors message">{errors.previewImg2}</div>}
         <input type="text" placeholder="Image URL" value={img2} onChange={({ target: { value } }) => setImg2(value)} />

@@ -66,6 +66,7 @@
 import { csrfFetch } from "./csrf";
 
 const ADD_THE_IMAGES = "spots/addImageToSpot";
+const UPDATE_IMAGES = "spots/updateImages";
 
 // Action creator to add the image to a specific spot
 const addImageToSpot = (spotId, image) => {
@@ -75,6 +76,16 @@ const addImageToSpot = (spotId, image) => {
     image,
   };
 };
+
+const updateImagesForSpot = (spotId, images) => {
+  return {
+    type: UPDATE_IMAGES,
+    spotId,
+    images,
+  };
+};
+
+
 
 // Thunk action to add images to a specific spot
 export const addTheImages = (payload, id) => async (dispatch) => {
@@ -99,22 +110,45 @@ export const addTheImages = (payload, id) => async (dispatch) => {
   });
 };
 
+
+
+export const updateImages = (images, spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(images),
+  });
+
+  if (response.ok) {
+    const updatedImages = await response.json();
+    dispatch(updateImagesForSpot(spotId, updatedImages));
+  }
+};
+
+
+
+
 // Reducer to handle the images update for a specific spot
 const defaultState = {};
 
-export default function spotImagesReducer(state = defaultState, action) {
-  const { type, spotId, image } = action;
-  switch (type) {
-    case ADD_THE_IMAGES: {
+const spotsImagesReducer = (state = defaultState, action) => {
+  switch (action.type) {
+    case ADD_THE_IMAGES:
       return {
         ...state,
-        [spotId]: {
-          ...state[spotId], // Preserve existing spot data
-          images: state[spotId]?.images ? [...state[spotId].images, image] : [image], // Add new image(s)
-        },
+        [action.spotId]: [...(state[action.spotId] || []), action.image],
       };
-    }
+    case UPDATE_IMAGES:
+      return {
+        ...state,
+        [action.spotId]: action.images,
+      };
     default:
       return state;
   }
-}
+};
+
+
+export default spotsImagesReducer;
