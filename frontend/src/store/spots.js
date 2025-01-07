@@ -36,9 +36,17 @@ const getSpot = (payload) => {
   };
 };
 
-const remove = () => {
+// const remove = () => {
+//   return {
+//     type: DELETE_SPOT,
+//   };
+// };\
+
+
+const remove = (id) => {
   return {
     type: DELETE_SPOT,
+    payload: id, // Include the spot ID
   };
 };
 
@@ -142,15 +150,35 @@ export const addASpot = (spot) => async (dispatch) => {
   }
 };
 
+// export const removeSpot = (id) => async (dispatch) => {
+//   const res = await csrfFetch(`/api/spots/${id}`, {
+//     method: "DELETE",
+//   });
+
+//   if (res.ok) {
+//     dispatch(remove(id)); // Pass the ID to the reducer
+//   }
+// };
+
+
+
 export const removeSpot = (id) => async (dispatch) => {
+  // Optimistically update state by dispatching the remove action first
+  dispatch(remove(id));
+
   const res = await csrfFetch(`/api/spots/${id}`, {
     method: "DELETE",
   });
 
-  if (res.ok) {
-    dispatch(remove(id)); // Pass the ID to the reducer
+  if (!res.ok) {
+    // If the request fails, log an error and revert the state by re-fetching spots
+    console.error("Failed to delete spot");
+    dispatch(getAllSpots());
   }
 };
+
+
+
 
 // Reducer
 const initialState = {};
