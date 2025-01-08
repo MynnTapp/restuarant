@@ -87,27 +87,60 @@ const updateImagesForSpot = (spotId, images) => {
 
 
 
-// Thunk action to add images to a specific spot
+// // Thunk action to add images to a specific spot
+// export const addTheImages = (payload, id) => async (dispatch) => {
+//   const res = await Promise.all(
+//     payload.map(
+//       (imageData) =>
+//         csrfFetch(`/api/spots/${id}/images`, {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify(imageData),
+//         }).then((response) => response.json()) // Ensure the response is parsed to JSON
+//     )
+//   );
+
+
+//   // Dispatch the action to add each new image to the specific spot
+//   res.forEach((image) => {
+//     dispatch(addImageToSpot(id, image));
+//   });
+// };
+
+
+
+import { useNavigate } from "react-router-dom"; // Updated import
+
 export const addTheImages = (payload, id) => async (dispatch) => {
-  const res = await Promise.all(
-    payload.map(
-      (imageData) =>
+  try {
+    const res = await Promise.all(
+      payload.map((imageData) =>
         csrfFetch(`/api/spots/${id}/images`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(imageData),
-        }).then((response) => response.json()) // Ensure the response is parsed to JSON
-    )
-  );
+        }).then((response) => response.json())
+      )
+    );
 
+    // Dispatch the action to add each new image to the specific spot
+    res.forEach((image) => {
+      dispatch(addImageToSpot(id, image));
+    });
 
-  // Dispatch the action to add each new image to the specific spot
-  res.forEach((image) => {
-    dispatch(addImageToSpot(id, image));
-  });
+    // Assuming you're using `useNavigate` from react-router v6+
+    const navigate = useNavigate();
+    navigate(`/spots/${id}`); // Navigate to the spot page after successful image upload
+  } catch (error) {
+    console.error("Error while adding images:", error);
+  }
 };
+
+
 
 
 export const updateImages = (images, spotId) => async (dispatch) => {
