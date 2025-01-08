@@ -285,7 +285,7 @@ router.get("/current", restoreUser, requireAuth, async (req, res, next) => {
         price: userSpots.price,
         createdAt: userSpots.createdAt,
         updatedAt: userSpots.updatedAt,
-        avgRating: parseFloat(userSpots.get("avgRating")).toFixed(1) || null,
+        avgRating: userSpots.get("avgRating") !== null ? parseFloat(userSpots.get("avgRating")).toFixed(1) : null,
         previewImage: userSpots.SpotImages.length ? userSpots.SpotImages[0].url : null,
       }));
 
@@ -412,8 +412,8 @@ router.get("/:spotId", async (req, res, next) => {
 
     // Ensure aggregate values are not null
     const numReviews = aggregateStats.numReviews ? parseInt(aggregateStats.numReviews) : 0;
-    const avgStarRating = aggregateStats.avgStarRating ? parseFloat(aggregateStats.avgStarRating).toFixed(1) : "0.0";
-
+    //const avgStarRating = aggregateStats.avgStarRating ? parseFloat(aggregateStats.avgStarRating).toFixed(1) : "0.0";
+const avgStarRating = aggregateStats.avgStarRating !== null ? parseFloat(aggregateStats.avgStarRating).toFixed(1) : "0.0";
     // Spot details derived from Spots, and spot associations
     // with SpotImages, Reviews, and Users.
     const detailedResponse = {

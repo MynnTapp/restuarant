@@ -14,7 +14,7 @@ export default function CalloutBox({ spot, reviews }) {
     <>
       <div className="booking-block" data-testid="spot-callout-box">
         <div className="price_reviews">
-          <div data-testid="spot-price">$ {spot?.price?.toFixed(2)} night</div>
+          <div data-testid="spot-price">$ {typeof spot?.price === "number" ? spot.price.toFixed(2) : "N/A"} night</div>
           {reviews.length ? (
             <div data-testid="spot-rating">
               <FaStar />
