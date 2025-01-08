@@ -131,6 +131,7 @@ export default function SpotForm({ isNewSpot }) {
 
     let spot;
     if (isNewSpot) {
+      console.log("Images Payload:", imagesPayload); // Debugging
       spot = await dispatch(addASpot(payload));
       if (!spot) return <h1>Loading...</h1>;
       await dispatch(addTheImages(imagesPayload, spot.id));
