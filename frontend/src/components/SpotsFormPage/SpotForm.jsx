@@ -143,7 +143,7 @@ export default function SpotForm({ isNewSpot }) {
     if (spot?.id) {
       navigateTo(`/spots/${spot.id}`);
     } else {
-      console.error("Failed to navigate: Spot data is missing", spot);
+      console.log("Failed to navigate: Spot data is missing", spot);
     }
   };
 
