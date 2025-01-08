@@ -102,7 +102,7 @@ export default function SpotForm({ isNewSpot }) {
       spot = await dispatch(updateSpot(id, payload));
       if (!spot) return <h1>Loading...</h1>;
     }
-    navigateTo(`/spots/${spot.id}`);
+    navigateTo(`/spots/${spot?.id}`);
   };
 
   return (
