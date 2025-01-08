@@ -27,7 +27,7 @@ export default function AllTheSpots({ isCurrent }) {
                       {spot?.avgRating ? spot?.avgRating : "NEW!"}
                     </span>
                   </p>
-                  ${typeof spot?.price === "number" ? spot.price.toFixed(2) : "N/A"} night
+                  ${typeof spot?.price === "number" ? spot.price.toFixed(2) : parseFloat(spot?.price)} night
                 </div>
                 <div className="button-box">
                   <button
@@ -54,7 +54,7 @@ export default function AllTheSpots({ isCurrent }) {
                     {spot?.avgRating ? spot?.avgRating : "NEW!"}
                   </span>
                 </p>
-                <span data-testid="spot-price">${typeof spot?.price === "number" ? spot.price.toFixed(2) : "N/A"} night</span>
+                <span data-testid="spot-price">${typeof spot?.price === "number" ? spot.price.toFixed(2) : parseFloat(spot?.price)} night</span>
               </div>
             </Link>
           ))}
