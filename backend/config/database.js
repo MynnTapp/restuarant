@@ -29,7 +29,7 @@ const config = require("./index");
 
 module.exports = {
   development: {
-    storage: './dev.db',  // Uses the dbFile defined in index.js
+    storage: config.dbFile, // Uses the dbFile defined in index.js
     dialect: "sqlite",
     seederStorage: "sequelize",
     logQueryParameters: true,
