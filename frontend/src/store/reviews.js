@@ -1,8 +1,9 @@
 import { csrfFetch } from "./csrf";
-
+import { getOneSpot } from "./spots";
 const CREATE_REVIEW = "reviews/add";
 const DELETE_REVIEW = "reviews/remove";
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
+
 
 const initialState = {};
 
@@ -77,13 +78,20 @@ export const getAllReviews = (id) => async (dispatch) => {
 // export const createReview = (review, id) => async (dispatch) => {
 //   const options = {
 //     method: "POST",
+//     headers: { "Content-Type": "application/json" },
 //     body: JSON.stringify(review),
 //   };
 //   const res = await csrfFetch(`/api/spots/${id}/reviews`, options);
-//   if (!res.message) {
-//     dispatch(add(res));
+//   const data = await res.json();
+
+//   if (res.ok) {
+//     dispatch(add(data)); // Add the review directly
+//     dispatch(getAllReviews(id)); // Refresh reviews for consistency
+//     return data;
 //   }
 // };
+
+
 
 
 export const createReview = (review, id) => async (dispatch) => {
@@ -98,6 +106,7 @@ export const createReview = (review, id) => async (dispatch) => {
   if (res.ok) {
     dispatch(add(data)); // Add the review directly
     dispatch(getAllReviews(id)); // Refresh reviews for consistency
+    dispatch(getOneSpot(id)); // Refresh spot details to update review count
     return data;
   }
 };
