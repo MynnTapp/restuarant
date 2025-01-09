@@ -1,5 +1,6 @@
 import { csrfFetch } from "./csrf";
 import { getOneSpot } from "./spots";
+import { getAllSpots } from "./spots";
 const CREATE_REVIEW = "reviews/add";
 const DELETE_REVIEW = "reviews/remove";
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
@@ -107,6 +108,7 @@ export const createReview = (review, id) => async (dispatch) => {
     dispatch(add(data)); // Add the review directly
     dispatch(getAllReviews(id)); // Refresh reviews for consistency
     dispatch(getOneSpot(id)); // Refresh spot details to update review count
+    dispatch(getAllSpots()); // Refresh all spots to update review counts on the landing page
     return data;
   }
 };
