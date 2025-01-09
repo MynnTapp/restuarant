@@ -46,7 +46,12 @@ export function Modal() {
   return ReactDOM.createPortal(
     <div id="modal">
       <div id="modal-background" onClick={closeModal} />
-      <div id="modal-content">{modalContent}</div>
+      <div
+        id="modal-content"
+        onClick={(e) => e.stopPropagation()} // Prevent click propagation
+      >
+        {modalContent}
+      </div>
     </div>,
     modalRef.current
   );
