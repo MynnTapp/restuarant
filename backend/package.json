@@ -7,10 +7,10 @@
     "sequelize-cli": "sequelize-cli",
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
-    "start:production": "npx dotenv sequelize db:migrate --env production && npx dotenv sequelize db:seed:all --env production && node ./bin/www",
+    "start:production": "node ./bin/www",
     "build": "node psql-setup-script.js",
-    "db:build": "npx dotenv sequelize db:migrate --env production && npx dotenv sequelize db:seed:all --env production",
-    "db:reset": "npx dotenv sequelize db:seed:undo:all --env production && npx dotenv sequelize db:migrate:undo:all --env production && npx dotenv sequelize db:migrate --env production && npx dotenv sequelize db:seed:all --env production"
+    "db:build": "npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all",
+    "db:reset": "npx dotenv sequelize db:seed:undo:all && npx dotenv sequelize db:migrate:undo:all && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",
