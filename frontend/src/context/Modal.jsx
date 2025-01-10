@@ -61,7 +61,7 @@ import "./Modal.css";
 const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
-  const modalRef = useRef();
+  const modalRef = useRef(document.createElement("div"));
   const [modalContent, setModalContent] = useState(null);
   const [onModalClose, setOnModalClose] = useState(null);
 
@@ -81,7 +81,7 @@ export function ModalProvider({ children }) {
   );
 }
 
-const Modal = ({ modalRef, modalContent, closeModal }) => {
+export const Modal = ({ modalRef, modalContent, closeModal }) => {
   if (!modalRef || !modalRef.current || !modalContent) return null;
 
   return ReactDOM.createPortal(
@@ -94,5 +94,3 @@ const Modal = ({ modalRef, modalContent, closeModal }) => {
 };
 
 export const useModal = () => useContext(ModalContext);
-
-export default Modal;
