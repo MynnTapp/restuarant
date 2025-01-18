@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      "Spots",
+      "Restaurants",
       {
         id: {
           allowNull: false,
@@ -17,7 +17,7 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        
+
         ownerId: {
           type: Sequelize.INTEGER,
         },
@@ -33,12 +33,7 @@ module.exports = {
         country: {
           type: Sequelize.STRING,
         },
-        lat: {
-          type: Sequelize.DECIMAL,
-        },
-        lng: {
-          type: Sequelize.DECIMAL,
-        },
+
         name: {
           type: Sequelize.STRING,
         },
@@ -71,7 +66,7 @@ module.exports = {
    */
 
   async down(queryInterface, Sequelize) {
-    options.tableName = "Spots";
+    options.tableName = "Restaurants";
     return queryInterface.dropTable(options);
 
     /**

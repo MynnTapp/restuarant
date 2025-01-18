@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Review.belongsTo(models.Spot, {
-        foreignKey: "spotId",
+      Review.belongsTo(models.Restaurant, {
+        foreignKey: "restaurantId",
       });
 
       Review.belongsTo(models.User, {
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      spotId: {
+      restaurantId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

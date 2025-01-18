@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Booking extends Model {
+  class Purchase extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,23 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-      Booking.belongsTo(models.Spot, {
-        foreignKey: "spotId",
+      Purchase.belongsTo(models.Restaurant, {
+        foreignKey: "restuarantId",
       });
-      Booking.belongsTo(models.User, {
+      Purchase.belongsTo(models.User, {
         foreignKey: "userId",
       });
     }
 
     
   }
-  Booking.init({
+  Purchase.init({
     
-      spotId: {
+      restaurantId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "Spots",
+          model: "Restaurants",
         },
         onDelete: "CASCADE",
       },
@@ -40,38 +40,20 @@ module.exports = (sequelize, DataTypes) => {
         },
         onDelete: "CASCADE",
       },
-      startDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          isDate: true,
+      
         },
-      },
-      endDate: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        validate: {
-          isDate: true,
-        },
-      },
-    },
     {
       sequelize,
-      modelName: "Booking",
+      modelName: "Purchase",
       defaultScope: {
         attributes: {
           exclude: ["updatedAt", "createdAt"],
         },
       },
-      scopes: {
-        booker: {
-          attributes: ["spotId", "startDate", "endDate"],
-        },
-      },
-    
+      
   }, {
     sequelize,
-    modelName: 'Booking',
+    modelName: 'Purchase',
   });
-  return Booking;
+  return Purchase;
 };

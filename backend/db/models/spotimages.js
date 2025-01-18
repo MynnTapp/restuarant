@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class SpotImage extends Model {
+  class RestaurantImage extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,19 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      SpotImage.belongsTo(models.Spot, {
-        foreignKey: "spotId",
+      RestaurantImage.belongsTo(models.Restaurant, {
+        foreignKey: "restaurantId",
       });
     }
   }
-  SpotImage.init(
+  RestaurantImage.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      spotId: {
+      restaurantId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
@@ -36,8 +36,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "SpotImage",
+      modelName: "RestaurantImage",
     }
   );
-  return SpotImage;
+  return RestaurantImage;
 };

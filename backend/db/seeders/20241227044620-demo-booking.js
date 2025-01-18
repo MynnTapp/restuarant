@@ -1,6 +1,6 @@
 "use strict";
 
-const { Booking } = require("../models");
+const { Purchase } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -20,37 +20,27 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await Booking.bulkCreate(
+    await Purchase.bulkCreate(
       [
         {
-          spotId: 1,
+          restaurantId: 1,
           userId: 1,
-          startDate: "2024-11-19",
-          endDate: "2024-11-20",
         },
         {
-          spotId: 2,
+          restaurantId: 2,
           userId: 2,
-          startDate: "2025-11-19",
-          endDate: "2025-11-20",
         },
         {
-          spotId: 3,
+          restaurantId: 3,
           userId: 3,
-          startDate: "2026-11-19",
-          endDate: "2026-11-20",
         },
         {
-          spotId: 1,
+          restaurantId: 1,
           userId: 3,
-          startDate: "2027-11-19",
-          endDate: "2027-11-20",
         },
         {
-          spotId: 2,
+          restaurantId: 2,
           userId: 1,
-          startDate: "2028-12-19",
-          endDate: "2028-12-20",
         },
       ],
       { validate: true }
@@ -64,7 +54,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    options.tableName = "Bookings";
+    options.tableName = "Purchases";
     return queryInterface.bulkDelete(options, {}, {});
   },
 };

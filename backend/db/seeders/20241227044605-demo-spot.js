@@ -1,6 +1,6 @@
 "use strict";
 
-const { Spot } = require("../models");
+const { Restaurant } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -20,7 +20,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await Spot.bulkCreate(
+    await Restaurant.bulkCreate(
       [
         {
           ownerId: 1,
@@ -28,10 +28,8 @@ module.exports = {
           city: "San Francisco",
           state: "California",
           country: "United States of America",
-          lat: 37.7645358,
-          lng: -122.4730327,
-          name: "App Academy",
-          description: "Place where web developers are created",
+          name: "Bucky's Diner",
+          description: "Place where you can eat pirate cuisine",
           price: 123,
         },
         {
@@ -40,10 +38,8 @@ module.exports = {
           city: "Los Angeles",
           state: "California",
           country: "United States of America",
-          lat: 86.0283756,
-          lng: -118.9472658,
-          name: "Code Smyth",
-          description: "Some other place",
+          name: "Popcorn Palace",
+          description: "place where you can eat movie cuisine",
           price: 456,
         },
         {
@@ -52,10 +48,8 @@ module.exports = {
           city: "Chicago",
           state: "Illinois",
           country: "United States of America",
-          lat: 55.8765123,
-          lng: -100.9994445,
-          name: "The Bean",
-          description: "Shiny big bean",
+          name: "Bean Town",
+          description: "Place where you can eat bean cuisine",
           price: 7373,
         },
         {
@@ -64,10 +58,8 @@ module.exports = {
           city: "New York",
           state: "New York",
           country: "United States of America",
-          lat: 12.3456789,
-          lng: -123.456789,
-          name: "Big Apple",
-          description: "Big city with lots of stuff",
+          name: "The big turkey",
+          description: "Place where you can eat turkey cuisine",
           price: 999,
         },
         // {
@@ -95,7 +87,7 @@ module.exports = {
      * await queryInterface.bulkDelete('People', null, {});
      *
      */
-    options.tableName = "Spots";
+    options.tableName = "Restaurants";
     return queryInterface.bulkDelete(options, {}, {});
   },
 };

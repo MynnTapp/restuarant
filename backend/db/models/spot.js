@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Spot extends Model {
+  class Restaurant extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,25 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Spot.hasMany(models.Review, {
-        foreignKey: "spotId",
+      Restaurant.hasMany(models.Review, {
+        foreignKey: "restuarantId",
         onDelete: "CASCADE",
       });
-      Spot.hasMany(models.Booking, { foreignKey: "spotId", onDelete: "CASCADE" });
+      Restaurant.hasMany(models.Purchase, { foreignKey: "restaurantId", onDelete: "CASCADE" });
 
-      Spot.hasMany(models.SpotImage, {
-        foreignKey: "spotId",
+      Restaurant.hasMany(models.RestaurantImage, {
+        foreignKey: "restaurantId",
         onDelete: "CASCADE",
       });
 
-      Spot.belongsTo(models.User, {
+      Restaurant.belongsTo(models.User, {
         as: "Owner",
         foreignKey: "ownerId",
         onDelete: "CASCADE",
       });
     }
   }
-  Spot.init(
+  Restaurant.init(
     {
       ownerId: {
         type: DataTypes.INTEGER,
@@ -49,22 +49,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lat: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-        validate: {
-          min: -90,
-          max: 90,
-        },
-      },
-      lng: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-        validate: {
-          min: -180,
-          max: 180,
-        },
-      },
+      
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -83,8 +68,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Spot",
+      modelName: "Restaurant",
     }
   );
-  return Spot;
+  return Restaurant;
 };

@@ -24,31 +24,31 @@ module.exports = {
       [
         {
           userId: 1,
-          spotId: 1,
+          restaurantId: 1,
           review: "This was an awesome spot!",
           stars: 5,
         },
         {
           userId: 1,
-          spotId: 2,
+          restaurantId: 2,
           review: "Terrible!",
           stars: 1,
         },
         {
           userId: 1,
-          spotId: 3,
+          restaurantId: 3,
           review: "It was alright.",
           stars: 3,
         },
         {
           userId: 2,
-          spotId: 1,
+         restaurantId: 1,
           review: "Very unclean.",
           stars: 2,
         },
         {
           userId: 3,
-          spotId: 1,
+          restaurantId: 1,
           review: "Nice trip!",
           stars: 4,
         },
