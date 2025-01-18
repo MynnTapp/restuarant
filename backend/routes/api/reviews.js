@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Review, User, Spot, ReviewImage, SpotImage } = require("../../db/models");
+const { Review, User, Restaurant, ReviewImage, RestaurantImage } = require("../../db/models");
 
 const { requireAuth } = require("../../utils/auth");
 
@@ -22,11 +22,11 @@ router.get("/current", requireAuth, async (req, res) => {
           attributes: ["id", "firstName", "lastName"],
         },
         {
-          model: Spot,
-          attributes: ["id", "ownerId", "address", "city", "state", "country", "lat", "lng", "name", "price"],
+          model: Restaurant,
+          attributes: ["id", "ownerId", "address", "city", "state", "country",  "name", "price"],
           include: [
             {
-              model: SpotImage,
+              model: RestaurantImage,
               where: {
                 preview: true,
               },
@@ -47,10 +47,10 @@ router.get("/current", requireAuth, async (req, res) => {
       const reviewData = review.toJSON();
 
       // Safely extract the previewImage if available
-      reviewData.Spot.previewImage = reviewData.Spot.SpotImages && reviewData.Spot.SpotImages.length > 0 ? reviewData.Spot.SpotImages[0].url : null;
+      reviewData.Restaurant.previewImage = reviewData.Restaurant.RestaurantImages && reviewData.Restaurant.RestaurantImages.length > 0 ? reviewData.Restaurant.RestaurantImages[0].url : null;
 
       // Remove SpotImages from the response as it's no longer needed
-      delete reviewData.Spot.SpotImages;
+      delete reviewData.Restaurant.RestaurantImages;
 
       return reviewData;
     });

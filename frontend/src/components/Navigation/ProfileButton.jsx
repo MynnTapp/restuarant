@@ -56,7 +56,7 @@ export default function ProfileButton({ user }) {
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
-              <NavLink to="/spots/current">Manage Spots</NavLink>
+              <NavLink to="/restaurants/current">Manage Spots</NavLink>
             </li>
             <li>
               <button onClick={logout} className="logout-button">

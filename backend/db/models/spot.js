@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Restaurant.hasMany(models.Review, {
-        foreignKey: "restuarantId",
+        foreignKey: "restaurantId",
         onDelete: "CASCADE",
       });
       Restaurant.hasMany(models.Purchase, { foreignKey: "restaurantId", onDelete: "CASCADE" });

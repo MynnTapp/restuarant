@@ -81,15 +81,15 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "spots/:id",
+        path: "restaurants/:id",
         element: <SpotDetailPage />,
       },
       {
-        path: "spots/new",
+        path: "restaurants/new",
         element: <SpotForm isNewSpot={true} />,
       },
       {
-        path: "spots/current",
+        path: "restaurants/current",
         element: (
           <>
             <h1>Manage Spots</h1>
@@ -98,7 +98,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "spots/:id/edit",
+        path: "restaurants/:id/edit",
         element: <SpotForm isNewSpot={false} />,
       },
     ],

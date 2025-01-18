@@ -117,7 +117,7 @@ export const addTheImages = (payload, id) => async (dispatch) => {
   try {
     const res = await Promise.all(
       payload.map((imageData) =>
-        csrfFetch(`/api/spots/${id}/images`, {
+        csrfFetch(`/api/restaurants/${id}/images`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -134,7 +134,7 @@ export const addTheImages = (payload, id) => async (dispatch) => {
 
     // Assuming you're using `useNavigate` from react-router v6+
     const navigate = useNavigate();
-    navigate(`/spots/${id}`); // Navigate to the spot page after successful image upload
+    navigate(`/restaurants/${id}`); // Navigate to the spot page after successful image upload
   } catch (error) {
     console.error("Error while adding images:", error);
   }
@@ -143,9 +143,9 @@ export const addTheImages = (payload, id) => async (dispatch) => {
 
 
 
-export const updateImages = (images, spotId) => async (dispatch) => {
+export const updateImages = (images, restaurantId) => async (dispatch) => {
   try {
-    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    const response = await csrfFetch(`/api/restaurantss/${restaurantId}/images`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(images),
@@ -153,7 +153,7 @@ export const updateImages = (images, spotId) => async (dispatch) => {
 
     if (response.ok) {
       const updatedImages = await response.json();
-      dispatch(updateImagesForSpot(spotId, updatedImages));
+      dispatch(updateImagesForSpot(restaurantId, updatedImages));
     } else {
       const error = await response.json();
       console.error("Error updating images:", error);

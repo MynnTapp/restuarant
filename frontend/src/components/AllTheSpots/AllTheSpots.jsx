@@ -15,46 +15,46 @@ export default function AllTheSpots({ isCurrent }) {
     <div className="content_box" data-testid="spots-list">
       {isCurrent
         ? spots
-            ?.filter((spot) => spot?.ownerId === sessionUser?.id)
-            .map((spot, i) => (
+            ?.filter((restaurant) => restaurant?.ownerId === sessionUser?.id)
+            .map((restaurant, i) => (
               <div key={i + 1} className="spot-tile" data-testid="spot-tile">
-                <img src={spot?.previewImage} onClick={() => navigateTo(`/spots/${spot?.id}`)} className="spot-image" alt="Image Not Found"></img>
+                <img src={restaurant?.previewImage} onClick={() => navigateTo(`/restaurants/${restaurant?.id}`)} className="spot-image" alt="Image Not Found"></img>
                 <div className="spot-details">
                   <p className="locale-rating">
-                    {spot?.city}, {spot?.state}
+                    {restaurant?.city}, {restaurant?.state}
                     <span className="rating">
                       <FaStar />
-                      {spot?.avgRating ? spot?.avgRating : "NEW!"}
+                      {restaurant?.avgRating ? restaurant?.avgRating : "NEW!"}
                     </span>
                   </p>
-                  ${typeof spot?.price === "number" ? spot.price.toFixed(2) : parseFloat(spot?.price)} night
+                  ${typeof restaurant?.price === "number" ? restaurant.price.toFixed(2) : parseFloat(restaurant?.price)} night
                 </div>
                 <div className="button-box">
                   <button
                     onClick={() => {
-                      navigateTo(`/spots/${spot?.id}/edit`);
+                      navigateTo(`/restaurants/${restaurant?.id}/edit`);
                     }}
                   >
                     Update
                   </button>
-                  <OpenModal buttonText="Delete" modalComponent={<DeleteSpotModal id={spot?.id} />} />
+                  <OpenModal buttonText="Delete" modalComponent={<DeleteSpotModal id={restaurant?.id} />} />
                 </div>
               </div>
             ))
-        : spots?.map((spot, i) => (
-            <Link key={i + 1} className="spot-tile" data-testid="spot-tile" to={`/spots/${spot.id}`}>
-              <img src={spot?.previewImage} data-testid="spot-thumbnail-image" className="spot-image" alt="Image Not Found"></img>
+        : spots?.map((restaurant, i) => (
+            <Link key={i + 1} className="spot-tile" data-testid="spot-tile" to={`/restaurants/${restaurant.id}`}>
+              <img src={restaurant?.previewImage} data-testid="spot-thumbnail-image" className="spot-image" alt="Image Not Found"></img>
               <div className="spot-details">
                 <p className="locale-rating">
                   <span data-testid="spot-city">
-                    {spot?.city}, {spot?.state}
+                    {restaurant?.city}, {restaurant?.state}
                   </span>
                   <span className="rating" data-testid="spot-rating">
                     <FaStar />
-                    {spot?.avgRating ? spot?.avgRating : "NEW!"}
+                    {restaurant?.avgRating ? restaurant?.avgRating : "NEW!"}
                   </span>
                 </p>
-                <span data-testid="spot-price">${typeof spot?.price === "number" ? spot.price.toFixed(2) : parseFloat(spot?.price)} night</span>
+                <span data-testid="spot-price">${typeof restaurant?.price === "number" ? restaurant.price.toFixed(2) : parseFloat(restaurant?.price)} night</span>
               </div>
             </Link>
           ))}

@@ -15,7 +15,7 @@ export default function Navigation({ isLoaded }) {
           <img src="https://www.dbackdrop.com/cdn/shop/files/M5-151.jpg?v=1684748585" className="logo-image" />
         </NavLink>
       </li>
-      <li className="welcome">Welcome to Pink life of Airbnb</li>
+      <li className="welcome">Welcome to Imaginary Restuarant creator</li>
       {isLoaded && (
         <>
           <span
@@ -25,7 +25,7 @@ export default function Navigation({ isLoaded }) {
               left: "12.5vw",
             }}
           >
-            <NavLink to="/spots/new" data-testid="create-new-spot-button">
+            <NavLink to="/restaurants/new" data-testid="create-new-spot-button">
               Create a New Spot
             </NavLink>
           </span>

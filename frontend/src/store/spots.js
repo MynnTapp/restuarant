@@ -73,7 +73,7 @@ const normalizer = (array) => {
 
 
 export const getCurrentUserSpots = () => async (dispatch) => {
-  const res = await csrfFetch("/api/spots/current");
+  const res = await csrfFetch("/api/restaurants/current");
   const data = await res.json();
 
   if (data && Array.isArray(data.Spots)) {
@@ -86,18 +86,18 @@ export const getCurrentUserSpots = () => async (dispatch) => {
 
 // Thunks
 export const getAllSpots = () => async (dispatch) => {
-  const res = await csrfFetch("/api/spots");
+  const res = await csrfFetch("/api/restaurants");
   const data = await res.json();
 
-  if (data && Array.isArray(data.Spots)) {
-    const normalizedSpots = normalizer(data.Spots);
+  if (data && Array.isArray(data.Restaurants)) {
+    const normalizedSpots = normalizer(data.Restaurants);
     dispatch(allSpots(normalizedSpots)); // Dispatch normalized spots
   }
   return data;
 };
 
 export const getOneSpot = (id) => async (dispatch) => {
-  const res = await csrfFetch(`/api/spots/${id}`);
+  const res = await csrfFetch(`/api/restaurants/${id}`);
   const data = await res.json();
 
   if (data && Array.isArray(data.SpotImages)) {
@@ -108,7 +108,7 @@ export const getOneSpot = (id) => async (dispatch) => {
 };
 
 export const updateSpot = (id, spotData, imagesPayload) => async (dispatch) => {
-  const response = await csrfFetch(`/api/spots/${id}`, {
+  const response = await csrfFetch(`/api/restaurants/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -134,7 +134,7 @@ export const updateSpot = (id, spotData, imagesPayload) => async (dispatch) => {
 
 
 export const addASpot = (spot) => async (dispatch) => {
-  const res = await csrfFetch("/api/spots", {
+  const res = await csrfFetch("/api/restaurants", {
     method: "POST",
     body: JSON.stringify(spot),
   });
@@ -166,7 +166,7 @@ export const removeSpot = (id) => async (dispatch) => {
   // Optimistically update state by dispatching the remove action first
   dispatch(remove(id));
 
-  const res = await csrfFetch(`/api/spots/${id}`, {
+  const res = await csrfFetch(`/api/restaurants/${id}`, {
     method: "DELETE",
   });
 
@@ -203,7 +203,7 @@ export default function spotsReducer(state = initialState, { type, payload }) {
         ...state,
         [payload.id]: {
           ...payload,
-          SpotImages: { ...payload.SpotImages },
+          RestaurantImages: { ...payload.RestaurantImages },
           Owner: { ...payload.Owner },
         },
       };
