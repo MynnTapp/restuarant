@@ -1,6 +1,3 @@
-import {DeleteReviewModal, UpdateReviewModal} from "./ReviewModal";
+import DeleteReviewModal from "./ReviewModal";
 
-
-
-
-export default {DeleteReviewModal, UpdateReviewModal};
+export default DeleteReviewModal;

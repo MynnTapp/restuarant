@@ -1,7 +1,6 @@
 import "./Reviews.css";
 import { FaStar } from "react-icons/fa";
 import DeleteReviewModal from "../ReviewModal";
-import { UpdateReviewModal } from "../ReviewModal/ReviewModal";
 import { CreateReviewModal } from "../ReviewModal/ReviewModal";
 import OpenModal from "../OpenModal";
 import { useEffect, useState } from "react";
@@ -43,14 +42,7 @@ export default function Reviews({ spot }) {
                   {MONTHS_OF_YEAR[new Date(review.createdAt).getMonth()]}, {new Date(review.createdAt).getFullYear()}
                 </div>
                 <p>{review.review}</p>
-                {/* {user && review.userId === user.id ? <OpenModal buttonText="Delete" modalComponent={<DeleteReviewModal id={review.id} flag={toggle} />} /> : null}
-                {user && review.userId === user.id ? <OpenModal buttonText="update" modalComponent={<UpdateReviewModal id={review.id} flag={toggle} />} /> : null} */}
-                {user && review.userId === user.id ? (
-                  <>
-                    <OpenModal buttonText="Delete" modalComponent={() => <DeleteReviewModal id={review.id} flag={toggle} />} />
-                    <OpenModal buttonText="Update" modalComponent={() => <UpdateReviewModal id={review.id} existingReview={review.review} existingStars={review.stars} flag={toggle} />} />
-                  </>
-                ) : null}
+                {user && review.userId === user.id ? <OpenModal buttonText="Delete" modalComponent={<DeleteReviewModal id={review.id} flag={toggle} />} /> : null}
               </div>
             ) : null
           )}

@@ -6,6 +6,7 @@ const DELETE_REVIEW = "reviews/remove";
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
 const UPDATE_REVIEW = "reviews/update";  // New action type for updating review
 
+
 const initialState = {};
 
 const add = (review) => {
@@ -81,24 +82,6 @@ export const getAllReviews = (id) => async (dispatch) => {
   return data;
 };
 
-
-
-
-// export const createReview = (review, id) => async (dispatch) => {
-//   const options = {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(review),
-//   };
-//   const res = await csrfFetch(`/api/spots/${id}/reviews`, options);
-//   const data = await res.json();
-
-//   if (res.ok) {
-//     dispatch(add(data)); // Add the review directly
-//     dispatch(getAllReviews(id)); // Refresh reviews for consistency
-//     return data;
-//   }
-// };
 
 
 
