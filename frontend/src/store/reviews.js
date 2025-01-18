@@ -38,13 +38,6 @@ const update = (review) => {
   };
 };
 
-// const normalizer = (data) => {
-//   const res = {};
-//   console.log(data);
-//   data.forEach((ele) => (res[ele.id] = ele));
-
-//   return res;
-// };
 
 
 const normalizer = (data) => {
@@ -58,16 +51,6 @@ const normalizer = (data) => {
 
   return res;
 };
-
-
-
-// export const getAllReviews = (id) => async (dispatch) => {
-//   const res = await csrfFetch(`/api/spots/${id}/reviews`);
-//   if (!res.errors) {
-//     dispatch(getAll(normalizer(res.Reviews)));
-//     return res;
-//   }
-// };
 
 
 
