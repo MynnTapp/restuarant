@@ -1,44 +1,45 @@
-/* Reviews.css */
-
 .review-box {
-  border: 2px solid rgb(255, 105, 180); /* Hot pink border */
-  background-color: rgb(255, 240, 245); /* Light pink background */
-  border-radius: 0.5rem;
+  border: 2px solid #d4a373; /* Gold border */
+  background-color: #fff8f2; /* Warm cream background */
+  border-radius: 0.8rem; /* Softer corners for elegance */
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
 }
 
 .review-box p {
   margin: 0.5rem 0;
   font-size: 1rem;
-  color: rgb(105, 105, 105); /* Neutral gray text */
+  color: #6c757d; /* Neutral gray for readability */
+  font-family: "Georgia", serif; /* Elegant font for content */
 }
 
 .review-box div {
   font-size: 0.9rem;
-  color: rgb(150, 150, 150); /* Slightly muted gray for metadata */
+  color: #a0a0a0; /* Muted gray for metadata */
 }
 
 .review-box .delete-button {
-  background-color: rgb(255, 105, 180); /* Hot pink */
+  background-color: #d4a373; /* Gold background */
   color: white;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .review-box .delete-button:hover {
-  background-color: rgb(255, 20, 147); /* Deep pink on hover */
+  background-color: #8b4513; /* Deep brown on hover */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slight shadow for emphasis */
 }
 
 .reviews-header {
   display: flex;
   align-items: center;
-  font-size: 1.2rem;
-  color: rgb(255, 105, 180); /* Hot pink */
+  font-size: 1.4rem;
+  color: #8b4513; /* Deep brown for header */
+  font-family: "Georgia", serif;
   margin-bottom: 1rem;
 }
 
@@ -48,27 +49,29 @@
 
 .reviews-new {
   font-size: 1rem;
-  color: rgb(105, 105, 105); /* Neutral gray text */
+  color: #6c757d; /* Neutral gray for text */
   margin-top: 1rem;
   text-align: center;
 }
 
 .reviews-new button {
-  background-color: rgb(255, 105, 180); /* Hot pink */
+  background-color: #d4a373; /* Gold background */
   color: white;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .reviews-new button:hover {
-  background-color: rgb(255, 20, 147); /* Deep pink on hover */
+  background-color: #8b4513; /* Deep brown on hover */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Slight shadow for emphasis */
 }
 
 .reviews-new h5 {
   margin-top: 0.5rem;
-  color: rgb(105, 105, 105); /* Neutral gray text */
+  color: #6c757d; /* Neutral gray for subtlety */
   font-style: italic;
+  font-family: "Georgia", serif;
 }

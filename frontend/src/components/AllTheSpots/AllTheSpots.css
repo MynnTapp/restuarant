@@ -1,48 +1,116 @@
+/* General Styling */
+body {
+  font-family: "Georgia", serif; /* Classic font for restaurant vibe */
+  background-color: #f8f3ec; /* Soft beige background for warmth */
+  color: #333; /* Neutral dark gray for text */
+  margin: 0;
+  padding: 0;
+}
+
 main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2rem;
 }
 
 h1 {
   align-self: center;
+  font-size: 2.5rem;
+  color: #8b4513; /* Rich brown for a classy touch */
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .content_box {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1.5rem;
-  max-width: 1800px;
+  gap: 2rem; /* Increased spacing for a cleaner look */
+  max-width: 1600px;
+  padding: 1rem;
 }
 
 .spot-tile {
   display: flex;
   flex-direction: column;
-  height: fit-content;
-  width: 24.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd; /* Light border for separation */
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 22rem; /* Slightly smaller width for a refined feel */
+}
+
+.spot-tile:hover {
+  transform: scale(1.02); /* Interactive hover effect */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .spot-image {
   display: grid;
   place-items: center;
-  height: 15rem;
+  height: 12rem;
   width: 100%;
   cursor: pointer;
-  font-size: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem 0.75rem 0 0;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.spot-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 p {
   text-align: start;
+  line-height: 1.6;
+  font-size: 1rem;
+  margin: 0.5rem 0;
 }
 
 .locale-rating {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #555; /* Muted gray for subtlety */
 }
 
 .spot-details {
-  padding: 0rem 0.5rem;
+  padding: 1rem;
   text-align: left;
+}
+
+.spot-details h2 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  color: #8b4513; /* Same rich brown as the title for consistency */
+}
+
+.spot-details p {
+  color: #666; /* Softer gray for descriptions */
+}
+
+button {
+  display: inline-block;
+  background-color: #8b4513;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #a5673f; /* Slightly lighter brown for hover effect */
 }

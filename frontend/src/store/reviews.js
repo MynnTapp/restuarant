@@ -63,7 +63,7 @@ const normalizer = (data) => {
 
 
 export const getAllReviews = (id) => async (dispatch) => {
-  const res = await csrfFetch(`/api/spots/${id}/reviews`);
+  const res = await csrfFetch(`/api/restaurants/${id}/reviews`);
   const data = await res.json();
   
 
@@ -101,7 +101,7 @@ export const createReview = (review, id) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(review),
   };
-  const res = await csrfFetch(`/api/spots/${id}/reviews`, options);
+  const res = await csrfFetch(`/api/restaurants/${id}/reviews`, options);
   const data = await res.json();
 
   if (res.ok) {

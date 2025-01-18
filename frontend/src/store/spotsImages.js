@@ -145,7 +145,7 @@ export const addTheImages = (payload, id) => async (dispatch) => {
 
 export const updateImages = (images, restaurantId) => async (dispatch) => {
   try {
-    const response = await csrfFetch(`/api/restaurantss/${restaurantId}/images`, {
+    const response = await csrfFetch(`/api/restaurants/${restaurantId}/images`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(images),

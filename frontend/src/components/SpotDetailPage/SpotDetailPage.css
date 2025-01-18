@@ -3,18 +3,18 @@
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  background-color: rgb(255, 240, 245); /* Light pink background */
+  background-color: rgb(240, 248, 255); /* Light blue background */
   padding: 1rem;
   border-radius: 0.5rem;
-  border: 2px solid rgb(255, 182, 193); /* Light pink border */
+  border: 2px solid rgb(200, 225, 255); /* Light blue border */
 }
 
 .preview {
   width: 50%;
   height: 22vw;
-  background-color: rgb(255, 182, 193); /* Light pink background */
+  background-color: rgb(230, 240, 250); /* Subtle light blue background */
   border-radius: 0.5rem;
-  border: 2px solid rgb(255, 105, 180); /* Hot pink border */
+  border: 2px solid rgb(135, 206, 250); /* Light sky blue border */
 }
 
 .details {
@@ -23,6 +23,6 @@
 }
 
 .divider {
-  border: 1px solid rgb(255, 182, 193); /* Light pink divider */
+  border: 1px solid rgb(200, 225, 255); /* Light blue divider */
   margin-bottom: 2rem;
 }

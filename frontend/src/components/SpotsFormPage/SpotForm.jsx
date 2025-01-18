@@ -14,8 +14,6 @@ export default function SpotForm({ isNewSpot }) {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(1);
@@ -40,8 +38,6 @@ export default function SpotForm({ isNewSpot }) {
       setCity(spot.city || "");
       setState(spot.state || "");
       setCountry(spot.country || "");
-      setLat(spot.lat || 0);
-      setLng(spot.lng || 0);
       setDescription(spot.description || "");
       setName(spot.name || "");
       setPrice(spot.price || 1);
@@ -122,8 +118,6 @@ export default function SpotForm({ isNewSpot }) {
       city,
       state,
       country,
-      lat,
-      lng,
       name,
       price,
       description,
@@ -143,7 +137,7 @@ export default function SpotForm({ isNewSpot }) {
 
     // Debugging: Validate spot and navigate
     if (spot?.id) {
-      navigateTo(`/spots/${spot.id}`);
+      navigateTo(`/restaurants/${spot.id}`);
     } else {
       console.log("Failed to navigate: Spot data is missing", spot);
     }
@@ -178,23 +172,6 @@ export default function SpotForm({ isNewSpot }) {
             </label>
             <br />
             <input type="text" placeholder="STATE" value={state} onChange={({ target: { value } }) => setState(value)} />
-          </div>
-        </div>
-        <div className="lat-lng">
-          <div className="lat">
-            <label>
-              Latitude <span className="errors message"></span>
-            </label>
-            <br />
-            <input type="number" value={lat} onChange={({ target: { value } }) => setLat(value)} />
-            <span className="comma">,</span>
-          </div>
-          <div className="lng">
-            <label>
-              Longitude <span className="errors message"></span>
-            </label>
-            <br />
-            <input type="number" value={lng} onChange={({ target: { value } }) => setLng(value)} />
           </div>
         </div>
       </div>

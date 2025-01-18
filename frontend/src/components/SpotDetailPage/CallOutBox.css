@@ -1,40 +1,57 @@
 .booking-block {
-  border: 2px solid rgb(255, 105, 180); /* Pink border */
+  border: 2px solid rgb(100, 149, 237); /* Soft blue border */
   border-radius: 1rem;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin: 2rem;
-  width: 65vw;
-  background-color: rgb(255, 182, 193); /* Light pink background */
+  margin: 2rem auto;
+  width: 70vw;
+  max-width: 600px; /* Constrain width on large screens */
+  background-color: rgb(230, 240, 255); /* Light blue background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .price_reviews {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.2rem; /* Added margin for spacing */
 }
 
 .booking-button {
-  background-color: rgb(255, 105, 180); /* Hot pink background */
+  background-color: rgb(100, 149, 237); /* Soft blue background */
   color: white; /* White text for contrast */
   width: 100%;
   padding: 0.7rem 4rem;
-  margin: 0px auto;
-  font-size: 1rem;
+  margin: 0 auto;
+  font-size: 1.1rem; /* Slightly larger for easier reading */
   border-width: 1px;
-  border: 1px solid rgb(255, 182, 193); /* Border matching the block */
-  transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transitions */
+  border: 1px solid rgb(230, 240, 255); /* Light blue border to match background */
+  border-radius: 0.5rem; /* Rounded corners for smooth look */
+  transition: all 0.3s ease; /* Smooth transition for all states */
+  cursor: pointer; /* Add cursor pointer for better UX */
+}
+
+.booking-button:disabled {
+  background-color: #e6e6e6; /* Disabled state background */
+  color: #b3b3b3; /* Disabled state text color */
+  cursor: not-allowed; /* Show cursor for disabled state */
+  border: 1px solid #ccc; /* Lighter border for disabled state */
 }
 
 .booking-button.enabled {
-  box-shadow: rgb(255, 20, 147) 3px 4px 4px; /* Deep pink shadow */
-  background-color: rgb(255, 20, 147); /* Deep pink */
+  box-shadow: 0 4px 8px rgba(70, 130, 180, 0.5); /* Steel blue shadow when enabled */
+  background-color: rgb(70, 130, 180); /* Steel blue when enabled */
 }
 
 .booking-button.enabled:hover {
-  cursor: pointer;
+  background-color: rgb(100, 149, 237); /* Revert to soft blue on hover */
   box-shadow: none;
-  background-color: rgb(255, 105, 180); /* Revert to hot pink on hover */
+  color: white; /* Ensure text stays white on hover */
+}
+
+.booking-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(70, 130, 180, 0.3); /* Focus ring for accessibility */
 }

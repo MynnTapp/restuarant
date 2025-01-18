@@ -1,6 +1,6 @@
 h3 {
   margin-bottom: 0;
-  color: pink; /* Changed to pink */
+  color: rgb(34, 34, 34); /* Dark gray for text */
 }
 
 .notice {
@@ -21,18 +21,18 @@ form {
 
 .add-it {
   color: white;
-  background-color: pink; /* Changed to pink */
+  background-color: rgb(34, 139, 34); /* Forest green background */
   width: fit-content;
   cursor: pointer;
   margin: 1.5rem 0rem;
-  box-shadow: black 3px 3px 3px inset;
+  box-shadow: rgba(0, 0, 0, 0.25) 3px 3px 3px inset; /* Darker shadow for depth */
   padding: 0.6rem 1rem;
   border-width: 1px;
 }
 
 .add-it:hover {
-  background-color: #ff66cc; /* Slightly darker pink for hover */
-  box-shadow: black 3px 4px 4px;
+  background-color: rgb(28, 128, 28); /* Darker green for hover */
+  box-shadow: rgba(0, 0, 0, 0.5) 3px 4px 4px;
 }
 
 .errors.message {
@@ -57,23 +57,6 @@ form {
 
 .city-state {
   display: flex;
-}
-
-.lat-lng {
-  display: flex;
-  justify-content: space-between;
-  > .lat {
-    width: 48%;
-    > input {
-      width: 93%;
-    }
-  }
-  > .lng {
-    width: 49%;
-    > input {
-      width: 97%;
-    }
-  }
 }
 
 .comma {

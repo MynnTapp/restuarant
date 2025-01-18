@@ -12,10 +12,10 @@ export default function Navigation({ isLoaded }) {
     <ul className="nav-box">
       <li className="image-box">
         <NavLink data-testid="logo" to="/">
-          <img src="https://www.dbackdrop.com/cdn/shop/files/M5-151.jpg?v=1684748585" className="logo-image" />
+          <img src="https://static.wixstatic.com/media/81e2b1_3ec4c4d91eda4ac6a9ac11cb919a3995~mv2.png" className="logo-image" />
         </NavLink>
       </li>
-      <li className="welcome">Welcome to Imaginary Restuarant creator</li>
+      <li className="welcome">Welcome to Restuarant rater and creator!</li>
       {isLoaded && (
         <>
           <span

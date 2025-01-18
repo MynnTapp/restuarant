@@ -1,43 +1,65 @@
 body {
-  -color: #38a2e0;
+  font-family: "Georgia", serif; /* Classy font for a professional look */
+  background-color: #f8f3ec; /* Soft beige for a warm atmosphere */
+  color: #2c3e50; /* Deep gray-blue for text readability */
+  margin: 0;
+  padding: 0;
 }
 
 #root {
   text-align: center;
+  padding: 2rem;
 }
 
 .errors.message {
-  color: rgb(255, 0, 247);
+  color: #e74c3c; /* Vibrant red for error messages to stand out */
+  font-weight: bold;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  background-color: deeppink;
+  background-color: #fff; /* Clean white background for contrast */
+  padding: 2rem;
+  border: 1px solid #ddd; /* Subtle border for structure */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  max-width: 400px;
+  margin: 2rem auto;
 }
 
 .login-button {
-  background-color: rgb(191, 0, 255);
-  box-shadow: rgb(206, 32, 137) 3px 3px 3px inset;
-  color: rgb(118, 36, 201);
-  padding: 0.7rem 0rem;
-  font-size: 1.2rem;
+  background-color: #8b4513; /* Rich brown for sophistication */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2) inset;
+  color: #fff; /* White text for contrast */
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
   text-align: center;
-  margin-bottom: 1rem;
-  font-family: fantasy;
-  border-radius: 1px;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .login-button:disabled {
-  box-shadow: rgb(174, 14, 86) 3px 3px 3px inset;
-  background-color: #1e0077;
+  background-color: #c0c0c0; /* Neutral gray for disabled state */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1) inset;
+  cursor: not-allowed;
 }
 
 .login-button.enabled {
-  box-shadow: rgb(227, 39, 180) 3px 4px 4px;
-  cursor: pointer;
+  background-color: #a5673f; /* Lighter brown for active state */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
 .login-button.enabled:hover {
+  background-color: #6e3b17; /* Darker brown for hover effect */
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.login-button.enabled:active {
+  background-color: #5a2d13; /* Even darker shade for active click */
   box-shadow: none;
 }

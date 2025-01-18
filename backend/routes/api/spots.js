@@ -534,7 +534,7 @@ router.post("/:restaurantId/reviews", restoreUser, requireAuth, validateReview, 
 /**** GET reviews by spot's id ****/
 router.get("/:restaurantId/reviews", async (req, res) => {
   const { restaurantId } = req.params;
-  const restaurant = await Spot.findByPk(req.params.spotId); // get spot id
+  const restaurant = await Restaurant.findByPk(req.params.restaurantId); // get spot id
 
   if (!restaurant) {
     return res.status(404).json({
