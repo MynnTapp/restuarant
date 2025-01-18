@@ -24,22 +24,22 @@ module.exports = {
       [
         {
           restaurantId: 1,
-          url: "https://www.rachelcooks.com/wp-content/uploads/2022/02/bbq-chicken-pizza-2022-1500r-12-square.jpg",
+          url: "https://www.spoton.com/blog/content/images/2023/11/Mexican_Restaurant-1-1.jpg",
           preview: true,
         },
         {
           restaurantId: 2,
-          url: "https://api.pizzahut.io/v1/content/en-in/in-1/images/pizza/veggie-supreme-cheese-maxx.9c36faf3796239a077a0a98ba489d7ce.1.jpg",
+          url: "https://i.pinimg.com/736x/c5/05/0b/c5050bcfa200371b9792fc03903ba04e.jpg",
           preview: true,
         },
         {
           restaurantId: 3,
-          url: "https://www.recipetineats.com/tachyon/2023/05/Garlic-cheese-pizza_9.jpg",
+          url: "https://s3-media1.fl.yelpcdn.com/bphoto/8eL0mk3Q8TQ6ymoSLZ4XBA/o.jpg",
           preview: true,
         },
         {
           restaurantId: 4,
-          url: "https://cdn.usarestaurants.info/assets/uploads/0e2035aecd9cc17a099fc60f52292ca3_-united-states-michigan-macomb-county-warren-sorrento-pizza-586-759-1177htm.jpg",
+          url: "https://s4.scoopwhoop.com/anj2/5f991def18ac8109dae2da58/cd6b4298-9abb-4beb-98c8-82ca4df3e8e7.jpg",
           preview: true,
         },
         // {

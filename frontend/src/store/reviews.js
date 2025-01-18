@@ -4,7 +4,7 @@ import { getAllSpots } from "./spots";
 const CREATE_REVIEW = "reviews/add";
 const DELETE_REVIEW = "reviews/remove";
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
-
+const UPDATE_REVIEW = "reviews/update";  // New action type for updating review
 
 const initialState = {};
 
@@ -26,6 +26,14 @@ const getAll = (payload) => {
   return {
     type: GET_ALL_REVIEWS,
     payload,
+  };
+};
+
+
+const update = (review) => {
+  return {
+    type: UPDATE_REVIEW,
+   payload: review, // Return the updated review
   };
 };
 
@@ -122,6 +130,25 @@ export const deleteReview = (id) => async (dispatch) => {
   dispatch(remove(id));
 };
 
+
+export const updateReview = (review, id) => async (dispatch) => {
+  const options = {
+    method: "PUT", // Use PUT for updating
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(review),
+  };
+
+  const res = await csrfFetch(`/api/reviews/${id}`, options);
+  const data = await res.json();
+
+  if (res.ok) {
+    dispatch(update(data)); // Dispatch the updated review
+    dispatch(getAllReviews(review.restaurantId)); // Refresh reviews for consistency
+    return data;
+  }
+};
+
+
 export default function reviewsReducer(state = initialState, { type, payload }) {
   switch (type) {
     case GET_ALL_REVIEWS: {
@@ -132,6 +159,16 @@ export default function reviewsReducer(state = initialState, { type, payload }) 
         ...state,
         [payload.id]: payload,
       };
+    case UPDATE_REVIEW: {
+      return {
+        ...state,
+        [payload.id]: {
+          ...state[payload.id], // Keep the other properties intact if needed
+          review: payload.review, // Update the review content
+          stars: payload.stars, // Update the stars rating
+        },
+      };
+    }
     case DELETE_REVIEW: {
       const newState = { ...state };
       delete newState[payload];

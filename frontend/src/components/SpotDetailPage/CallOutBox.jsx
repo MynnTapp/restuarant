@@ -26,8 +26,13 @@ export default function CalloutBox({ spot, reviews }) {
             </div>
           )}
         </div>
-        <button data-testid="reserve-button" onClick={() => alert("Feature coming soon")} className={`booking-button ${isDisabled.current ? "" : "enabled"}`} disabled={setStatus().current}>
-          Reserve
+        <button
+          data-testid="reserve-button"
+          onClick={() => alert("Congrats on making a reservation!")}
+          className={`booking-button ${isDisabled.current ? "" : "enabled"}`}
+          disabled={setStatus().current}
+        >
+          make a reservation
         </button>
       </div>
     </>
