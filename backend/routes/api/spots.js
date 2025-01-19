@@ -166,6 +166,39 @@ router.post("/", restoreUser, requireAuth, validateSpotData, async (req, res) =>
 });
 
 
+router.delete("/:id", restoreUser, requireAuth, async (req, res, next) => {
+  const { id } = req.params;
+  const { user } = req;
+
+  try {
+    // Find the restaurant by ID
+    const restaurant = await Restaurant.findByPk(id);
+
+    if (!restaurant) {
+      return res.status(404).json({
+        message: "Spot not found",
+      });
+    }
+
+    // Check if the authenticated user owns the spot
+    if (restaurant.ownerId !== user.id) {
+      return res.status(403).json({
+        message: "Forbidden: You do not have permission to delete this spot",
+      });
+    }
+
+    // Delete the spot
+    await restaurant.destroy();
+
+    return res.status(200).json({
+      message: "Spot deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 

@@ -11,9 +11,11 @@ body {
   padding: 2rem;
 }
 
-.errors.message {
-  color: #e74c3c; /* Vibrant red for error messages to stand out */
-  font-weight: bold;
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  visibility: visible; /* Ensure visibility */
 }
 
 .login-form {
