@@ -5,6 +5,66 @@ const { Review, User, Restaurant, ReviewImage, RestaurantImage } = require("../.
 const { requireAuth } = require("../../utils/auth");
 
 
+// Get all reviews for a specific restaurant
+
+
+
+
+
+router.get("/", async (req, res) => {
+  try {
+    // Fetch all reviews from the database
+    const reviews = await Review.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ["id", "firstName", "lastName"], // Include user details
+        },
+        {
+          model: Restaurant,
+          attributes: ["id", "ownerId", "address", "city", "state", "country", "name", "price"], // Include restaurant details
+          include: [
+            {
+              model: RestaurantImage,
+              where: { preview: true }, // Only include preview images
+              attributes: ["url"],
+              required: false, // Allow restaurants without preview images
+            },
+          ],
+        },
+        {
+          model: ReviewImage,
+          attributes: ["id", "url"], // Include review images
+        },
+      ],
+    });
+
+    // Format the reviews response
+    const formattedReviews = reviews.map((review) => {
+      const reviewData = review.toJSON();
+
+      // Extract preview image for the restaurant if available
+      reviewData.Restaurant.previewImage = reviewData.Restaurant.RestaurantImages?.[0]?.url || null;
+
+      // Remove RestaurantImages from the response as it's not needed
+      delete reviewData.Restaurant.RestaurantImages;
+
+      return reviewData;
+    });
+
+    // Send the response
+    res.status(200).json({ Reviews: formattedReviews });
+  } catch (err) {
+    console.error("Error fetching reviews:", err.message); // Log error for debugging
+    res.status(500).json({
+      message: "An error occurred while fetching reviews",
+      error: err.message,
+    });
+  }
+});
+
+
+
 router.get("/current", requireAuth, async (req, res) => {
   try {
     const currentUser = parseInt(req.user.id);

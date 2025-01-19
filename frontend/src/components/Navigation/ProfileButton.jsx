@@ -53,10 +53,10 @@ export default function ProfileButton({ user }) {
       <ul className={ulClassname} ref={ulRef} data-testid="user-dropdown-menu">
         {user ? (
           <>
-            <li>Hello, {user.firstName}</li>
+            <li>Hey, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
-              <NavLink to="/restaurants/current">Manage Spots</NavLink>
+              <NavLink to="/restaurants/current">Manage restaurants</NavLink>
             </li>
             <li>
               <button onClick={logout} className="logout-button">

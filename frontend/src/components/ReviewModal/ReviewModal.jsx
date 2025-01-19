@@ -62,8 +62,8 @@ export function CreateReviewModal({ id, existingReview }) {
 
   return (
     <>
-      <div className="review-heading">{existingReview ? "Update your review" : "How was your stay?"}</div>
-      <textarea placeholder="Leave your review here..." value={review} onChange={({ target: { value } }) => setReview(value)} className="review-comment" />
+      <div className="review-heading">{existingReview ? "Update your entry?" : "How was the experience?"}</div>
+      <textarea placeholder="Write your entry here..." value={review} onChange={({ target: { value } }) => setReview(value)} className="review-comment" />
 
       <div onMouseLeave={() => setStars(stars)} className="rating-input">
         {[1, 2, 3, 4, 5].map((num) => (
@@ -75,7 +75,7 @@ export function CreateReviewModal({ id, existingReview }) {
       </div>
 
       <button onClick={handleSubmission} disabled={review.length < 10 || stars === 0} className="review-button">
-        {existingReview ? "Update Review" : "Submit Review"}
+        {existingReview ? "Update Entry" : "Submit Entry"}
       </button>
     </>
   );

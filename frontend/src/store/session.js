@@ -22,9 +22,14 @@ export const login = (user) => async (dispatch) => {
     method: "POST",
     body: JSON.stringify({
       credential,
-      password
-    })
+      password,
+    }),
   });
+  if (response.status === 401) {
+    const errorData = await response.json();
+    console.error("Login failed:", errorData.message); // Log the error for debugging
+    // Show the error message to the user
+  }
   const data = await response.json();
   dispatch(setUser(data.user));
   return response;

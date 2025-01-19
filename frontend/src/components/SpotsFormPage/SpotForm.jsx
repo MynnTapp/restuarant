@@ -145,9 +145,9 @@ export default function SpotForm({ isNewSpot }) {
 
   return (
     <form onSubmit={getErrors} className="spot-form">
-      <div className="headers">{isNewSpot ? "Create a New Spot" : "Update your Spot"}</div>
-      <h3>Where&apos;s your place located?</h3>
-      <p>Guests will only get your exact address once they booked a reservation.</p>
+      <div className="headers">{isNewSpot ? "Add a new Restaurant" : "Update restuarant info"}</div>
+      <h3>Where&apos;s the restaurant you've eat at located?</h3>
+      <p>What's the location of this restaurant at?</p>
       <div className="location">
         <label>
           Country <span className="errors message">{errors.country ? errors.country : ""}</span>
@@ -176,26 +176,26 @@ export default function SpotForm({ isNewSpot }) {
         </div>
       </div>
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-      <h3>Describe your place to guests</h3>
-      <p>Mention the best features of your space, and special amentities like fast wifi or parking, and what you love about the neighborhood.</p>
+      <h3>Describe the experience in a few short words</h3>
+      <p>discuss the highlights of your experience.</p>
       <textarea className="description" type="text" minLength="30" placeholder="Please write at least 30 characters" value={description} onChange={({ target: { value } }) => setDescription(value)} />
       {errors.description ? <div className="errors message">{errors.description}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-      <h3>Create a title for your spot</h3>
-      <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
+      <h3>Create a title based on the experience!</h3>
+      <p>Catch everyone's attention with your title!</p>
       <input type="text" placeholder="Name of your spot" value={name} onChange={({ target: { value } }) => setName(value)} />
       {errors.name ? <div className="errors message">{errors.name}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-      <h3>Set a base price for your spot</h3>
-      <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
+      <h3>how much was it per plate?/how much did you pay for the entire meal?</h3>
+      <p>stating the pricing can help others determine whether they'd like to eat there too!</p>
       <div>
         <span>$ </span>
         <input type="number" min="1" value={price} placeholder="Price per night (USD)" onChange={({ target: { value } }) => setPrice(Number(value))} />
       </div>
       {errors.price ? <div className="errors message">{errors.price}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-      <h3>Liven up your spot with photos</h3>
-      <p>Submit a link to at least one photo to publish your spot.</p>
+      <h3>Share photos of the experience and the restaurant you ate at</h3>
+      <p>Submit a link to at least one photo to publish your restaurant experience.</p>
       <div
         style={{
           display: "flex",
@@ -218,7 +218,7 @@ export default function SpotForm({ isNewSpot }) {
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <div className="button-box">
         <button type="submit" className="add-it">
-          {isNewSpot ? "Create Spot" : "Update Spot"}
+          {isNewSpot ? "Create restaurant post" : "Update Restaurant info"}
         </button>
       </div>
     </form>

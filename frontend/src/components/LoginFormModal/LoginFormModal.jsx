@@ -92,16 +92,8 @@ export default function LoginFormModal() {
       credential,
       password,
     };
-    try {
-      const data = await dispatch(login(payload));
-      if (data.message) {
-        setErrors({ invalid: getError(data.message) });
-      } else {
-        closeModal();
-      }
-    } catch (err) {
-      setErrors({ invalid: getError("Network error") });
-    }
+    const data = await dispatch(login(payload));
+    data.message === "Invalid credentials" ? setErrors({ invalid: "The provided credentials were invalid." }) : closeModal();
   };
 
   const signIn = async (e) => {

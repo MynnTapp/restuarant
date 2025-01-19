@@ -26,7 +26,7 @@ export default function Navigation({ isLoaded }) {
             }}
           >
             <NavLink to="/restaurants/new" data-testid="create-new-spot-button">
-              Create a New Spot
+              <div>Eaten at a new Restaurant?</div>
             </NavLink>
           </span>
           <li className="profile-box">

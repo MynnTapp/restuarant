@@ -54,7 +54,7 @@ export default function AllTheSpots({ isCurrent }) {
                     {restaurant?.avgRating ? restaurant?.avgRating : "NEW!"}
                   </span>
                 </p>
-                <span data-testid="spot-price">${typeof restaurant?.price === "number" ? restaurant.price.toFixed(2) : parseFloat(restaurant?.price)} night</span>
+                <span data-testid="spot-price">${typeof restaurant?.price === "number" ? restaurant.price.toFixed(2) : parseFloat(restaurant?.price)} per plate</span>
               </div>
             </Link>
           ))}

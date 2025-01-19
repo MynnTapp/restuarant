@@ -19,64 +19,44 @@ const validateLogin = [
 
 
 router.post("/", validateLogin, async (req, res, next) => {
-  try {
-    const { credential, password } = req.body;
-
-    // Check if both credential and password are provided
-    const errors = {};
-    if (!credential) errors.credential = "Email or username is required";
-    if (!password) errors.password = "Password is required";
-
-    // If there are validation errors, respond with a 400 status code and the errors
-    if (Object.keys(errors).length > 0) {
-      return res.status(400).json({
-        message: "Bad Request",
-        errors: errors,
-      });
-    }
-
-    // Proceed with finding the user if validation passes
-    const user = await User.unscoped().findOne({
-      where: {
-        [Op.or]: {
-          username: credential,
-          email: credential,
-        },
+  const { credential, password } = req.body;
+  console.log("credential ", credential, "password: ", password);
+  const user = await User.unscoped().findOne({
+    where: {
+      [Op.or]: {
+        username: credential,
+        email: credential,
       },
-    });
+    },
+  });
 
-    // If no user is found or password is incorrect, respond with an error
-    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-      const err = new Error("Invalid credentials");
-      err.status = 401;
-      err.title = "Login failed";
-      return next(err);
-    }
+  // if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+  //   const err = new Error("Invalid credentials");
+  //   err.status = 401;
+  //   return next(err);
+  // }
 
-    // Construct safe user object
-    const safeUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      username: user.username,
-    };
-
-    // Set token cookie and respond with user info
-    await setTokenCookie(res, safeUser);
-
-    return res.json({
-      user: safeUser,
-    });
-  } catch (error) {
-    console.error(error); // Log the error for debugging
-    res.status(500).json({
-      message: "Error logging in",
-      error: error.message, // Return the error message
-    });
+  if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
+    const err = new Error("Invalid credentials");
+    err.status = 401;
+    err.errors = { credential: "The provided username/email and password combination is incorrect." };
+    return next(err); // Pass the error to the error formatter
   }
-});
 
+  const safeUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    username: user.username,
+  };
+
+  await setTokenCookie(res, safeUser);
+
+  return res.json({
+    user: safeUser,
+  });
+});
 
 
 

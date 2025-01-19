@@ -14,9 +14,9 @@ export default function DeleteSpotModal({ id }) {
   return (
     <>
       <h2>Confirm Delete</h2>
-      <h5>Are you sure you want to remove this spot from the listings?</h5>
-      <button onClick={handleDeletion}>Yes (Delete Spot)</button>
-      <button onClick={() => closeModal()}>No (Keep Spot)</button>
+      <h5>Are you sure you want to remove this restaurant?</h5>
+      <button onClick={handleDeletion}>Yes </button>
+      <button onClick={() => closeModal()}>No </button>
     </>
   );
 }
