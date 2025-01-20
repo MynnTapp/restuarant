@@ -7,8 +7,9 @@
 .profile-dropdown {
   list-style-type: none;
   position: absolute;
-  background-color: #f4ebe4; /* Soft cream for a warm and neutral tone */
+  background-color: #eaba95; /* Soft cream for a warm and neutral tone */
   padding: 1rem;
+  margin-left: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
   width: 12rem; /* Consistent size for dropdown */
@@ -32,6 +33,32 @@
   background-color: #a0522d; /* Slightly lighter brown for hover effect */
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Outer shadow on hover */
+}
+
+.signup-modal-button {
+  background-color: #fdcb6e; /* Signup button background color */
+  color: white; /* Text color */
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px;
+  cursor: pointer;
+}
+.signup-modal-button:hover {
+  background-color: #ffeaa7; /* Hover effect */
+}
+
+.login-modal-button {
+  background-color: #00b894; /* Login button background color */
+  color: white; /* Text color */
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin: 8px;
+  cursor: pointer;
+}
+.login-modal-button:hover {
+  background-color: #55efc4; /* Hover effect */
 }
 
 .logout-button {

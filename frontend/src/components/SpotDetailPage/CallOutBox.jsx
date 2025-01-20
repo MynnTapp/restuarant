@@ -18,7 +18,7 @@ export default function CalloutBox({ spot, reviews }) {
           {reviews.length ? (
             <div data-testid="spot-rating">
               <FaStar />
-              {spot.avgRating} • {spot.numReviews === 1 ? <span>{spot.numReviews} review</span> : <span>{spot.numReviews} reviews</span>}
+              {spot.avgRating} • {spot.numReviews === 1 ? <span>{spot.numReviews} entry</span> : <span>{spot.numReviews} entries</span>}
             </div>
           ) : (
             <div>

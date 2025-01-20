@@ -65,42 +65,6 @@ export default function SpotForm({ isNewSpot }) {
     Object.values(errors).length ? setErrors(errors) : handleSubmit();
   };
 
-  // const handleSubmit = async () => {
-  //   const imagesPayload = [
-  //     { url: previewImg, preview: true },
-  //     { url: img2, preview: false },
-  //     { url: img3, preview: false },
-  //     { url: img4, preview: false },
-  //     { url: img5, preview: false },
-  //   ].map((ele) => {
-  //     if (!ele.url) ele.url = "dummyData.png";
-  //     return ele;
-  //   });
-
-  //   const payload = {
-  //     address,
-  //     city,
-  //     state,
-  //     country,
-  //     lat,
-  //     lng,
-  //     name,
-  //     price,
-  //     description,
-  //   };
-
-  //   let spot;
-  //   if (isNewSpot) {
-  //     spot = await dispatch(addASpot(payload));
-  //     if (!spot) return <h1>Loading...</h1>;
-  //     await dispatch(addTheImages(imagesPayload, spot.id));
-  //   } else {
-  //     spot = await dispatch(updateSpot(id, payload));
-  //     if (!spot) return <h1>Loading...</h1>;
-  //   }
-  //   navigateTo(`/spots/${spot?.id}`);
-  // };
-
   const handleSubmit = async () => {
     const imagesPayload = [
       { url: previewImg, preview: true },
@@ -146,8 +110,8 @@ export default function SpotForm({ isNewSpot }) {
   return (
     <form onSubmit={getErrors} className="spot-form">
       <div className="headers">{isNewSpot ? "Add a new Restaurant" : "Update restuarant info"}</div>
-      <h3>Where&apos;s the restaurant you've eat at located?</h3>
-      <p>What's the location of this restaurant at?</p>
+      <h3>Where&apos;s the restaurant you&apos;ve eat at located?</h3>
+      <p>Whatu&apos;s the location of this restaurant at?</p>
       <div className="location">
         <label>
           Country <span className="errors message">{errors.country ? errors.country : ""}</span>
@@ -182,12 +146,12 @@ export default function SpotForm({ isNewSpot }) {
       {errors.description ? <div className="errors message">{errors.description}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>Create a title based on the experience!</h3>
-      <p>Catch everyone's attention with your title!</p>
+      <p>Catch everyoneu&apos;s attention with your title!</p>
       <input type="text" placeholder="Name of your spot" value={name} onChange={({ target: { value } }) => setName(value)} />
       {errors.name ? <div className="errors message">{errors.name}</div> : null}
       <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
       <h3>how much was it per plate?/how much did you pay for the entire meal?</h3>
-      <p>stating the pricing can help others determine whether they'd like to eat there too!</p>
+      <p>stating the pricing can help others determine whether theyu&apos;d like to eat there too!</p>
       <div>
         <span>$ </span>
         <input type="number" min="1" value={price} placeholder="Price per night (USD)" onChange={({ target: { value } }) => setPrice(Number(value))} />

@@ -56,7 +56,7 @@ export default function ProfileButton({ user }) {
             <li>Hey, {user.firstName}</li>
             <li>{user.email}</li>
             <li>
-              <NavLink to="/restaurants/current">Manage restaurants</NavLink>
+              <NavLink to="/restaurants/current">My restaurants</NavLink>
             </li>
             <li>
               <button onClick={logout} className="logout-button">
@@ -66,8 +66,8 @@ export default function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <OpenModal itemText="Log In" onItemClick={closeMenu} modalComponent={<LoginFormModal />} />
-            <OpenModal itemText="Sign Up" onItemClick={closeMenu} modalComponent={<SignupFormModal />} />
+            <OpenModal className="login-modal-button" itemText="Log In" onItemClick={closeMenu} modalComponent={<LoginFormModal />} />
+            <OpenModal className="signup-modal-button" itemText="Sign Up" onItemClick={closeMenu} modalComponent={<SignupFormModal />} />
           </>
         )}
       </ul>
