@@ -15,7 +15,7 @@ export default function Navigation({ isLoaded }) {
           <img src="https://static.wixstatic.com/media/81e2b1_3ec4c4d91eda4ac6a9ac11cb919a3995~mv2.png" className="logo-image" />
         </NavLink>
       </li>
-      <li className="welcome">Welcome to Restuarant rater and creator!</li>
+      <li className="welcome">The Great Dragon Restaurant blog</li>
       {isLoaded && (
         <>
           <span
