@@ -1,6 +1,8 @@
 /* General Styling */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"); /* Import Poppins font */
+
 body {
-  font-family: "Georgia", serif; /* Classic font for restaurant vibe */
+  font-family: "Poppins", "Comic Sans MS", sans-serif; /* Fun and modern font pairing */
   background-color: #f8f3ec; /* Soft beige background for warmth */
   color: #333; /* Neutral dark gray for text */
   margin: 0;
@@ -16,11 +18,12 @@ main {
 
 h1 {
   align-self: center;
-  font-size: 2.5rem;
-  color: #8b4513; /* Rich brown for a classy touch */
+  font-size: 3rem; /* Bigger font for more impact */
+  font-weight: 700; /* Bold for emphasis */
+  color: #ff6f61; /* Bright coral for a playful feel */
   margin-bottom: 1.5rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 
 .content_box {
@@ -35,82 +38,79 @@ h1 {
 .spot-tile {
   display: flex;
   flex-direction: column;
-  background-color: #fff;
+  background: #fff; /* Default white background */
   border: 1px solid #ddd; /* Light border for separation */
-  border-radius: 0.75rem;
+  border-radius: 1rem; /* Larger radius for a softer look */
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: colorCycle 6s infinite; /* Attach animation */
   width: 22rem; /* Slightly smaller width for a refined feel */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .spot-tile:hover {
-  transform: scale(1.02); /* Interactive hover effect */
-  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05); /* More pronounced hover effect */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
 }
 
-.spot-image {
-  display: grid;
-  place-items: center;
-  height: 12rem;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 0.75rem 0.75rem 0 0;
-  overflow: hidden;
-  position: relative;
-  background-size: cover;
-  background-position: center;
+/* Color Cycling Animation */
+@keyframes colorCycle {
+  0% {
+    background-color: #f6d7d7; /* Soft pink */
+  }
+  25% {
+    background-color: #d7eaf6; /* Light blue */
+  }
+  50% {
+    background-color: #d7f6e2; /* Light green */
+  }
+  75% {
+    background-color: #f6e8d7; /* Soft peach */
+  }
+  100% {
+    background-color: #f6d7d7; /* Back to soft pink */
+  }
 }
 
-.spot-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* Staggered Animations for Unique Timing */
+.spot-tile:nth-child(1) {
+  animation-delay: 0s;
 }
 
-p {
-  text-align: start;
-  line-height: 1.6;
-  font-size: 1rem;
-  margin: 0.5rem 0;
+.spot-tile:nth-child(2) {
+  animation-delay: 1s;
 }
 
-.locale-rating {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9rem;
-  color: #555; /* Muted gray for subtlety */
+.spot-tile:nth-child(3) {
+  animation-delay: 2s;
 }
 
-.spot-details {
-  padding: 1rem;
-  text-align: left;
+.spot-tile:nth-child(4) {
+  animation-delay: 3s;
 }
 
-.spot-details h2 {
-  font-size: 1.25rem;
-  margin: 0 0 0.5rem 0;
-  color: #8b4513; /* Same rich brown as the title for consistency */
+.spot-tile:nth-child(5) {
+  animation-delay: 4s;
 }
 
-.spot-details p {
-  color: #666; /* Softer gray for descriptions */
+.spot-tile:nth-child(6) {
+  animation-delay: 5s;
 }
 
 button {
   display: inline-block;
-  background-color: #8b4513;
+  background-color: #ff6f61;
   color: #fff;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 1rem;
 }
 
 button:hover {
-  background-color: #a5673f; /* Slightly lighter brown for hover effect */
+  background-color: #ff8f7a; /* Lighter coral for hover effect */
 }

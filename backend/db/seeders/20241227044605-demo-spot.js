@@ -30,7 +30,7 @@ module.exports = {
           country: "United States of America",
           name: "Bucky's Diner",
           description: "Place where you can eat pirate cuisine",
-          price: 123,
+          price: 23,
         },
         {
           ownerId: 1,
@@ -40,7 +40,7 @@ module.exports = {
           country: "United States of America",
           name: "Popcorn Palace",
           description: "place where you can eat movie cuisine",
-          price: 456,
+          price: 56,
         },
         {
           ownerId: 2,
@@ -50,7 +50,7 @@ module.exports = {
           country: "United States of America",
           name: "Bean Town",
           description: "Place where you can eat bean cuisine",
-          price: 7373,
+          price: 43,
         },
         {
           ownerId: 3,
@@ -60,7 +60,7 @@ module.exports = {
           country: "United States of America",
           name: "The big turkey",
           description: "Place where you can eat turkey cuisine",
-          price: 999,
+          price: 99,
         },
         // {
         //   ownerId: 2,
