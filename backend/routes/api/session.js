@@ -1,5 +1,6 @@
 
 // backend/routes/api/session.js
+// backend/routes/api/session.js
 const express = require("express");
 const { restoreUser } = require("../../utils/auth");
 const { check } = require("express-validator");
@@ -19,44 +20,64 @@ const validateLogin = [
 
 
 router.post("/", validateLogin, async (req, res, next) => {
-  const { credential, password } = req.body;
-  console.log("credential ", credential, "password: ", password);
-  const user = await User.unscoped().findOne({
-    where: {
-      [Op.or]: {
-        username: credential,
-        email: credential,
+  try {
+    const { credential, password } = req.body;
+
+    // Check if both credential and password are provided
+    const errors = {};
+    if (!credential) errors.credential = "Email or username is required";
+    if (!password) errors.password = "Password is required";
+
+    // If there are validation errors, respond with a 400 status code and the errors
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({
+        message: "Bad Request",
+        errors: errors,
+      });
+    }
+
+    // Proceed with finding the user if validation passes
+    const user = await User.unscoped().findOne({
+      where: {
+        [Op.or]: {
+          username: credential,
+          email: credential,
+        },
       },
-    },
-  });
+    });
 
-  // if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-  //   const err = new Error("Invalid credentials");
-  //   err.status = 401;
-  //   return next(err);
-  // }
+    // If no user is found or password is incorrect, respond with an error
+    if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
+      const err = new Error("Invalid credentials");
+      err.status = 401;
+      err.title = "Login failed";
+      return next(err);
+    }
 
-  if (!user || !bcrypt.compareSync(password, user.hashedPassword)) {
-    const err = new Error("Invalid credentials");
-    err.status = 401;
-    err.errors = { credential: "The provided username/email and password combination is incorrect." };
-    return next(err); // Pass the error to the error formatter
+    // Construct safe user object
+    const safeUser = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+    };
+
+    // Set token cookie and respond with user info
+    await setTokenCookie(res, safeUser);
+
+    return res.json({
+      user: safeUser,
+    });
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res.status(500).json({
+      message: "Error logging in",
+      error: error.message, // Return the error message
+    });
   }
-
-  const safeUser = {
-    id: user.id,
-    firstName: user.firstName,
-    lastName: user.lastName,
-    email: user.email,
-    username: user.username,
-  };
-
-  setTokenCookie(res, safeUser);
-
-  return res.json({
-    user: safeUser,
-  });
 });
+
 
 
 
@@ -75,8 +96,6 @@ router.get("/", restoreUser, async (req, res) => {
       lastName: user.lastName,
       email: user.email,
       username: user.username,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
     },
   });
 });
