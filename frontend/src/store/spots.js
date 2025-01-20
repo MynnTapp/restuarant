@@ -100,8 +100,8 @@ export const getOneSpot = (id) => async (dispatch) => {
   const res = await csrfFetch(`/api/restaurants/${id}`);
   const data = await res.json();
 
-  if (data && Array.isArray(data.RestaurantImage)) {
-    data.RestaurantImage = normalizer(data.RestaurantImage);
+  if (data && Array.isArray(data.SpotImages)) {
+    data.SpotImages = normalizer(data.SpotImages);
   }
 
   dispatch(getSpot(data));
@@ -203,7 +203,7 @@ export default function spotsReducer(state = initialState, { type, payload }) {
         ...state,
         [payload.id]: {
           ...payload,
-          RestaurantImage: { ...payload.RestaurantImage },
+          RestaurantImages: { ...payload.RestaurantImages },
           Owner: { ...payload.Owner },
         },
       };

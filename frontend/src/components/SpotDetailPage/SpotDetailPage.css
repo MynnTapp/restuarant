@@ -3,65 +3,26 @@
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, rgb(240, 248, 255), rgb(230, 240, 250)); /* Gradient light blue background */
-  padding: 1.5rem;
-  border-radius: 2rem 0.5rem 2rem 0.5rem; /* Unique shape with asymmetric rounding */
-  border: 2px dashed rgb(200, 225, 255); /* Dashed light blue border for added style */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
-  transform: scale(1); /* Base scale */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hover effect transitions */
-}
-
-.main-spot-content:hover {
-  transform: scale(1.02); /* Slightly enlarge on hover */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Intensify shadow on hover */
+  background-color: rgb(240, 248, 255); /* Light blue background */
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid rgb(200, 225, 255); /* Light blue border */
 }
 
 .preview {
-  width: 60%;
-  height: 24vw;
-  background: radial-gradient(circle, rgb(230, 240, 250), rgb(240, 248, 255)); /* Radial gradient for unique look */
-  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%); /* Hexagonal shape */
-  border: 3px solid rgb(135, 206, 250); /* Thicker border for emphasis */
-  overflow: hidden;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.preview:hover {
-  transform: translateY(-10px) rotate(-2deg); /* Hover effect: lift and rotate */
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  width: 50%;
+  height: 22vw;
+  background-color: rgb(230, 240, 250); /* Subtle light blue background */
+  border-radius: 0.5rem;
+  border: 2px solid rgb(135, 206, 250); /* Light sky blue border */
 }
 
 .details {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem; /* Increased spacing for improved layout */
+  gap: 1rem; /* Add spacing between child elements */
 }
 
 .divider {
-  border: 0;
-  height: 2px; /* Thicker divider */
-  background: repeating-linear-gradient(to right, rgb(200, 225, 255), rgb(200, 225, 255) 10px, transparent 10px, transparent 20px); /* Dotted gradient line effect */
-  margin-bottom: 3rem;
-}
-
-.effect-bubble {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  background-color: rgb(135, 206, 250); /* Light sky blue bubble */
-  border-radius: 50%;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
+  border: 1px solid rgb(200, 225, 255); /* Light blue divider */
+  margin-bottom: 2rem;
 }
