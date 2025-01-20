@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         path: "restaurants/current",
         element: (
           <>
-            <h1>Manage Restaurant Entries</h1>
+            <h1>Restaurant Entries</h1>
             <AllTheSpots isCurrent={true} />
           </>
         ),
