@@ -65,6 +65,42 @@ export default function SpotForm({ isNewSpot }) {
     Object.values(errors).length ? setErrors(errors) : handleSubmit();
   };
 
+  // const handleSubmit = async () => {
+  //   const imagesPayload = [
+  //     { url: previewImg, preview: true },
+  //     { url: img2, preview: false },
+  //     { url: img3, preview: false },
+  //     { url: img4, preview: false },
+  //     { url: img5, preview: false },
+  //   ].map((ele) => {
+  //     if (!ele.url) ele.url = "dummyData.png";
+  //     return ele;
+  //   });
+
+  //   const payload = {
+  //     address,
+  //     city,
+  //     state,
+  //     country,
+  //     lat,
+  //     lng,
+  //     name,
+  //     price,
+  //     description,
+  //   };
+
+  //   let spot;
+  //   if (isNewSpot) {
+  //     spot = await dispatch(addASpot(payload));
+  //     if (!spot) return <h1>Loading...</h1>;
+  //     await dispatch(addTheImages(imagesPayload, spot.id));
+  //   } else {
+  //     spot = await dispatch(updateSpot(id, payload));
+  //     if (!spot) return <h1>Loading...</h1>;
+  //   }
+  //   navigateTo(`/spots/${spot?.id}`);
+  // };
+
   const handleSubmit = async () => {
     const imagesPayload = [
       { url: previewImg, preview: true },

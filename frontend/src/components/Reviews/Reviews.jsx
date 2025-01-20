@@ -113,7 +113,7 @@ export default function Reviews({ spot }) {
       {reviewsArr.length > 0 ? (
         <>
           <div>
-            <FaStar /> {spot.avgRating} • {spot.numReviews > 1 ? <span>{spot.numReviews} entries</span> : <span>{spot.numReviews} review</span>}
+            <FaStar /> {spot.avgRating} • {spot.numReviews > 1 ? <span>{spot.numReviews} reviews</span> : <span>{spot.numReviews} review</span>}
           </div>
           {reviewsArr.map((review) =>
             review && review.User ? (
